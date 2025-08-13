@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b0f1a" />
+  <meta name="description" content="NoneCloud — Premium game hosting powered by Pterodactyl Panel. Low latency, DDoS-protected, high‑performance nodes for Minecraft, CS2, Rust and more." />
+  <meta property="og:title" content="NoneCloud — Premium Game Hosting" />
+  <meta property="og:description" content="High‑performance, DDoS‑protected game hosting powered by Pterodactyl. Launch Minecraft, CS2, Rust, Valheim, and more in seconds." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://dummyimage.com/1200x630/0e1220/ffffff&text=NoneCloud" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>NoneCloud — Premium Game Hosting | Pterodactyl Powered</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --bg-0:#070b13;
+      --bg-1:#0b1020;
+      --bg-2:#0e152a;
+      --card:#0f162d80;
+      --text:#e9eefb;
+      --muted:#b6c2e1;
+      --brand-1:#7c3aed;
+      --brand-2:#22d3ee;
+      --accent:#06b6d4;
+      --success:#22c55e;
+      --danger:#ef4444;
+      --warning:#f59e0b;
+      --glass: blur(12px) saturate(140%);
+      --radius:14px;
+      --shadow-1: 0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.05);
+      --shadow-2: 0 30px 80px rgba(4,8,20,.65);
+      --grid: minmax(0, 1fr);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+      color:var(--text);
+      background: radial-gradient(1200px 800px at 10% -10%, #1f2a44 0%, transparent 60%),
+                  radial-gradient(1000px 600px at 90% 10%, #14213d 0%, transparent 60%),
+                  radial-gradient(800px 800px at 50% 120%, #0a0f1f 0%, transparent 60%),
+                  linear-gradient(180deg, var(--bg-0), var(--bg-2));
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{width:min(1200px, 92vw);margin:0 auto}
+
+    /* Preloader */
+    .preloader{position:fixed;inset:0;background:linear-gradient(180deg,#070b13,#0e152a);display:grid;place-items:center;z-index:9999}
+    .spinner{width:64px;height:64px;border-radius:50%;border:4px solid #ffffff20;border-top-color:var(--brand-2);animation:spin 1s linear infinite}
+    .preloader-logo{display:flex;align-items:center;gap:14px;margin-top:20px;opacity:.8}
+    .logo-mark{width:28px;height:28px;background:conic-gradient(from 180deg at 50% 50%, #7c3aed, #22d3ee, #7c3aed);border-radius:8px;box-shadow:0 8px 30px #22d3ee50}
+    .logo-type{font-weight:800;letter-spacing:.5px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:1000;background:linear-gradient(180deg,#0b1020ee,#0b1020a0 60%, transparent);backdrop-filter:var(--glass);border-bottom:1px solid #ffffff12}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#7c3aed 0%,#22d3ee 100%);box-shadow:0 10px 30px #7c3aed50, inset 0 0 12px #22d3ee80}
+    .brand .name{font-weight:800;letter-spacing:.3px}
+    .nav a{opacity:.9}
+    .menu{display:flex;gap:22px}
+    .menu a{font-weight:500;color:var(--muted)}
+    .nav-cta{display:flex;gap:10px}
+    .btn{--h:48px;display:inline-flex;align-items:center;justify-content:center;height:var(--h);padding:0 18px;border-radius:12px;border:1px solid #ffffff22;background:#ffffff06;color:var(--text);box-shadow:var(--shadow-1);transition:.25s ease;gap:10px}
+    .btn:hover{transform:translateY(-1px);background:#ffffff12}
+    .btn.primary{background:linear-gradient(90deg,#7c3aed,#22d3ee);border-color:transparent}
+    .btn.primary:hover{filter:brightness(1.05)}
+    .btn.ghost{background:transparent}
+    .mobile-toggle{display:none}
+
+    /* Hero */
+    .hero{position:relative;padding:80px 0 40px}
+    .hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:36px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:#c8d2ef;background:#7c3aed16;border:1px solid #7c3aed33;padding:8px 12px;border-radius:999px}
+    .eyebrow .dot{width:6px;height:6px;border-radius:999px;background:radial-gradient(circle at 30% 30%,#22d3ee,#7c3aed)}
+    .title{font-size:clamp(34px, 7vw, 64px);line-height:1.02;margin:16px 0 16px;letter-spacing:.2px}
+    .title-gradient{background:linear-gradient(90deg,#fff,#bfe9ff 40%,#a78bfa 70%,#22d3ee);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .subtitle{color:var(--muted);font-size:18px;line-height:1.6;max-width:58ch}
+    .badges{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}
+    .badge{font-size:12px;padding:8px 12px;border:1px solid #ffffff22;border-radius:999px;background:#ffffff08}
+    .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0 8px}
+    .trust{display:flex;align-items:center;gap:14px;opacity:.9;color:#c9d3ef;margin-top:8px}
+    .trust img{opacity:.7;filter:grayscale(100%)}
+
+    .hero-visual{position:relative;min-height:420px;border-radius:20px;overflow:hidden;background:linear-gradient(180deg,#0b0f1a,#0e152a);border:1px solid #ffffff12;box-shadow:var(--shadow-2)}
+    canvas#hero3d{position:absolute;inset:0;width:100%;height:100%}
+    .glow{position:absolute;inset:auto -20% -30% -20%;height:60%;filter:blur(60px);background:radial-gradient(60% 60% at 50% 50%, #22d3ee55, transparent 70%)}
+    .hero-floating{position:absolute;top:12%;left:8%;display:flex;gap:10px;flex-wrap:wrap;pointer-events:none}
+    .chip{padding:10px 12px;border-radius:12px;border:1px solid #ffffff24;background:#0b102099;box-shadow:0 8px 30px rgba(0,0,0,.35)}
+
+    /* Sections */
+    section{padding:72px 0}
+    .section-title{font-size:28px;margin:0 0 12px}
+    .section-sub{color:var(--muted);margin:0 0 22px}
+
+    /* Features */
+    .features{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:18px}
+    .card{padding:22px;border-radius:16px;border:1px solid #ffffff1a;background:#0e152a99;backdrop-filter:var(--glass);box-shadow:var(--shadow-1);position:relative;overflow:hidden}
+    .card .icon{width:42px;height:42px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,#0ea5e9,#8b5cf6);box-shadow:0 10px 30px #0ea5e980;color:white}
+    .card h4{margin:14px 0 8px}
+    .card p{margin:0;color:#c5cfee}
+    .card .corner{position:absolute;right:-40px;top:-40px;width:120px;height:120px;background:radial-gradient(closest-side, #22d3ee33, transparent 70%);transform:rotate(25deg)}
+
+    /* Panel Highlight */
+    .panel{display:grid;grid-template-columns:1.1fr 0.9fr;gap:24px;align-items:center}
+    .panel .mock{border-radius:16px;border:1px solid #ffffff1a;background:linear-gradient(180deg,#0b1020,#0f1a33);box-shadow:var(--shadow-2);overflow:hidden}
+    .mock .titlebar{display:flex;align-items:center;gap:8px;padding:12px 14px;background:#0c1222;border-bottom:1px solid #ffffff12}
+    .dot{width:10px;height:10px;border-radius:50%}
+    .dot.red{background:#ef4444}
+    .dot.yellow{background:#f59e0b}
+    .dot.green{background:#22c55e}
+    .mock .content{padding:18px}
+    .mock .row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:14px}
+    .mock .tile{border:1px solid #ffffff12;border-radius:12px;background:#0b1020;padding:14px;min-height:92px}
+
+    /* Games */
+    .games{display:flex;gap:12px;overflow:auto;padding-bottom:8px}
+    .game{display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid #ffffff1a;border-radius:999px;background:#0c1326;color:#eaf2ff;white-space:nowrap}
+    .game .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#22d3ee)}
+
+    /* Pricing */
+    .pricing-head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .toggle{display:flex;align-items:center;gap:10px;padding:8px;border:1px solid #ffffff1a;border-radius:999px;background:#0c1326}
+    .switch{position:relative;width:56px;height:30px;background:#ffffff1e;border-radius:999px;cursor:pointer}
+    .switch::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;background:#fff;border-radius:50%;transition:.25s}
+    .switch.active{background:linear-gradient(90deg,#7c3aed,#22d3ee)}
+    .switch.active::after{left:29px}
+    .plans{display:grid;grid-template-columns:repeat(4, minmax(0,1fr));gap:18px;margin-top:20px}
+    .plan{border:1px solid #ffffff1a;border-radius:18px;background:#0b1020;box-shadow:var(--shadow-1);display:flex;flex-direction:column}
+    .plan .head{padding:18px;border-bottom:1px solid #ffffff12;background:linear-gradient(180deg,#0b1020,#0f1730)}
+    .plan .head h4{margin:0 0 6px}
+    .plan .price{font-size:28px;font-weight:800}
+    .plan .body{padding:18px;display:flex;flex-direction:column;gap:10px}
+    .plan .feat{display:flex;align-items:center;gap:10px;color:#cdd6f6}
+    .plan .feat .tick{color:#22c55e}
+    .plan .cta{padding:18px}
+    .plan.highlight{outline:1px solid #22d3ee;border-color:#22d3ee66;transform:translateY(-4px)}
+
+    /* Network */
+    .network{position:relative}
+    .map{position:relative;border:1px solid #ffffff12;border-radius:18px;overflow:hidden;background:radial-gradient(circle at 50% 50%, #1b2544, #0b0f1a);height:380px}
+    .map::after{content:"";position:absolute;inset:0;background-image:url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg');background-size:cover;background-position:center;opacity:0.08;filter:contrast(1.2)}
+    .pulse{position:absolute;width:10px;height:10px;border-radius:50%;background:#22d3ee;box-shadow:0 0 0 0 #22d3ee;animation:pulse 2.4s infinite}
+    @keyframes pulse{0%{box-shadow:0 0 0 0 #22d3ee} 70%{box-shadow:0 0 0 24px rgba(34,211,238,0)} 100%{box-shadow:0 0 0 0 rgba(34,211,238,0)}}
+
+    /* Testimonials */
+    .testimonials{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:18px}
+    .quote{border:1px solid #ffffff12;background:#0b1020;border-radius:16px;padding:18px}
+    .quote .who{display:flex;align-items:center;gap:12px;margin-top:12px}
+    .avatar{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#22d3ee)}
+
+    /* FAQ */
+    .faq{display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:18px}
+    .qa{border:1px solid #ffffff12;border-radius:14px;background:#0b1020}
+    .qa button{all:unset;display:flex;justify-content:space-between;align-items:center;gap:16px;width:100%;padding:16px;cursor:pointer}
+    .qa .answer{max-height:0;overflow:hidden;transition:max-height .35s ease;padding:0 16px;color:#cfd7f6}
+    .qa.open .answer{max-height:240px;padding-bottom:16px}
+
+    /* CTA */
+    .cta{position:relative;border:1px solid #ffffff1a;border-radius:18px;overflow:hidden;background:radial-gradient(80% 80% at 0% 0%, #7c3aed22, transparent 70%),linear-gradient(180deg,#0b1020,#0f1730);padding:28px 24px}
+    .cta .row{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+
+    /* Footer */
+    footer{padding:48px 0;border-top:1px solid #ffffff12;background:linear-gradient(180deg, transparent, #090d18)}
+    .foot{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:18px}
+    .foot small{color:#aeb9dc}
+
+    /* Utilities */
+    [data-animate]{opacity:0;transform:translateY(16px)}
+    .show{opacity:1 !important;transform:none !important;transition:opacity .6s ease, transform .6s ease}
+    .kbd{font-family:"JetBrains Mono", monospace;font-size:12px;padding:3px 8px;border-radius:8px;border:1px solid #ffffff22;background:#0b1020}
+    .divider{height:1px;background:#ffffff12;margin:18px 0}
+    .tag{font-size:12px;color:#c7d2fe;background:#7c3aed22;border:1px solid #7c3aed44;padding:6px 10px;border-radius:999px}
+    .mono{font-family:"JetBrains Mono", monospace}
+
+    /* Back to top */
+    .to-top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:12px;border:1px solid #ffffff24;background:#0c1326;display:grid;place-items:center;opacity:0;pointer-events:none;transition:.25s}
+    .to-top.show{opacity:1;pointer-events:auto}
+
+    /* Responsive */
+    @media (max-width: 1024px){
+      .hero-grid, .panel{grid-template-columns:1fr}
+      .features{grid-template-columns:repeat(2, minmax(0,1fr))}
+      .plans{grid-template-columns:repeat(2, minmax(0,1fr))}
+      .testimonials{grid-template-columns:repeat(2, minmax(0,1fr))}
+      .foot{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width: 640px){
+      .menu{display:none}
+      .mobile-toggle{display:inline-flex}
+      .features{grid-template-columns:1fr}
+      .plans{grid-template-columns:1fr}
+      .testimonials{grid-template-columns:1fr}
+      .faq{grid-template-columns:1fr}
+      .hero{padding-top:56px}
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "NoneCloud",
+    "url": "https://nonecloud.example",
+    "sameAs": ["https://discord.gg/nonecloud"],
+    "description": "Premium provider of game hosting nodes powered by Pterodactyl Panel.",
+    "logo": "https://dummyimage.com/512x512/0e1220/ffffff&text=N"
+  }
+  </script>
+</head>
+<body>
+  <!-- Preloader -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div>
+      <div class="spinner" role="status" aria-label="Loading"></div>
+      <div class="preloader-logo">
+        <div class="logo-mark"></div>
+        <div class="logo-type">Loading NoneCloud…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <a href="#top" class="name">NoneCloud</a>
+        <span class="tag">Pterodactyl Powered</span>
+      </div>
+      <nav class="menu" aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#games">Games</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#panel">Panel</a>
+        <a href="#network">Network</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="nav-cta">
+        <a class="btn ghost" href="#" aria-label="Panel Login">Panel Login</a>
+        <a class="btn primary" href="#pricing" aria-label="Get Started">Get Started</a>
+        <button class="btn mobile-toggle" id="mobileToggle" aria-label="Open Menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main id="top" class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow" data-animate>
+          <div class="dot"></div>
+          <span class="mono">Low latency • DDoS Protected • NVMe</span>
+        </div>
+        <h1 class="title" data-animate>
+          Premium <span class="title-gradient">Game Hosting</span><br/>
+          for <span id="typed"></span>
+        </h1>
+        <p class="subtitle" data-animate>
+          NoneCloud is a premium provider of game hosting nodes designed to deliver reliable, high‑performance infrastructure for gamers and server owners worldwide. Powered by the trusted Pterodactyl Panel, our service enables seamless server management with user‑friendly control, enhanced security, and optimized performance.
+        </p>
+        <div class="badges" data-animate>
+          <span class="badge">Instant Setup</span>
+          <span class="badge">NVMe Storage</span>
+          <span class="badge">Locations Worldwide</span>
+          <span class="badge">24/7 Support</span>
+        </div>
+        <div class="hero-cta" data-animate>
+          <a class="btn primary" href="#pricing">Deploy Your Server</a>
+          <a class="btn" href="#contact">Join Discord</a>
+          <span class="kbd">$ ptero create —one‑click</span>
+        </div>
+        <div class="trust" data-animate>
+          <small>Trusted by creators and communities</small>
+          <img src="https://dummyimage.com/80x24/ffffff/000000.png&text=Guilds" width="80" height="24" alt="Guilds"/>
+          <img src="https://dummyimage.com/80x24/ffffff/000000.png&text=Servers" width="80" height="24" alt="Servers"/>
+          <img src="https://dummyimage.com/80x24/ffffff/000000.png&text=Studios" width="80" height="24" alt="Studios"/>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <canvas id="hero3d"></canvas>
+        <div class="glow"></div>
+        <div class="hero-floating">
+          <div class="chip">99.9% Uptime SLA</div>
+          <div class="chip">Advanced DDoS Mitigation</div>
+          <div class="chip">One‑click Installs</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="container">
+      <h2 class="section-title" data-animate>Why NoneCloud</h2>
+      <p class="section-sub" data-animate>
+        Built for performance, reliability, and simplicity — so you can focus on your community and gameplay.
+      </p>
+      <div class="features">
+        <div class="card" data-animate data-tilt>
+          <div class="corner"></div>
+          <div class="icon">⚡</div>
+          <h4>High Performance Nodes</h4>
+          <p>Latest‑gen CPUs, ECC RAM, NVMe storage, and high‑speed networks for minimal latency and maximum tick rate.</p>
+        </div>
+        <div class="card" data-animate data-tilt>
+          <div class="corner"></div>
+          <div class="icon">🛡️</div>
+          <h4>Enterprise DDoS Protection</h4>
+          <p>Advanced mitigation and smart firewalling keep your servers online even under volumetric attacks.</p>
+        </div>
+        <div class="card" data-animate data-tilt>
+          <div class="corner"></div>
+          <div class="icon">🧩</div>
+          <h4>Pterodactyl Powered</h4>
+          <p>Secure, intuitive server management with SFTP file access, schedules, backups, and real‑time resource monitoring.</p>
+        </div>
+        <div class="card" data-animate data-tilt>
+          <div class="corner"></div>
+          <div class="icon">🚀</div>
+          <h4>Instant Setup</h4>
+          <p>Deploy in seconds with pre‑built eggs and one‑click installs for Minecraft, CS2, Rust, Valheim, and more.</p>
+        </div>
+        <div class="card" data-animate data-tilt>
+          <div class="corner"></div>
+          <div class="icon">🔄</div>
+          <h4>Automated Backups</h4>
+          <p>Schedule snapshot backups to protect your worlds, configs, and progress. Restore instantly when needed.</p>
+        </div>
+        <div class="card" data-animate data-tilt>
+          <div class="corner"></div>
+          <div class="icon">🤝</div>
+          <h4>Support That Cares</h4>
+          <p>Help via Discord and tickets around the clock. We’re gamers too — we get it and we’ve got you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Panel highlight -->
+  <section id="panel">
+    <div class="container panel">
+      <div class="mock" data-animate>
+        <div class="titlebar">
+          <div class="dot red"></div>
+          <div class="dot yellow"></div>
+          <div class="dot green"></div>
+          <span style="margin-left:8px;color:#cbd5f8">Pterodactyl Panel</span>
+        </div>
+        <div class="content">
+          <div style="display:flex;gap:10px;align-items:center;justify-content:space-between">
+            <div class="badge">Servers</div>
+            <div class="badge">Backups</div>
+            <div class="badge">Schedules</div>
+            <div class="badge">Monitoring</div>
+          </div>
+          <div class="row">
+            <div class="tile">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <strong>Minecraft</strong>
+                <span class="tag">Running</span>
+              </div>
+              <div class="divider"></div>
+              <small class="mono">CPU 23% • RAM 3.2 GB • TPS 19.9</small>
+            </div>
+            <div class="tile">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <strong>CS2</strong>
+                <span class="tag">Running</span>
+              </div>
+              <div class="divider"></div>
+              <small class="mono">CPU 31% • RAM 2.1 GB • Tick 128</small>
+            </div>
+            <div class="tile">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <strong>Rust</strong>
+                <span class="tag" style="background:#22c55e22;border-color:#22c55e55">Ready</span>
+              </div>
+              <div class="divider"></div>
+              <small class="mono">CPU 12% • RAM 1.6 GB • Net 320 Mbps</small>
+            </div>
+          </div>
+          <div class="row">
+            <div class="tile">
+              <strong>Backups</strong>
+              <div class="divider"></div>
+              <small>Latest: Today • Auto Nightly</small>
+            </div>
+            <div class="tile">
+              <strong>Schedules</strong>
+              <div class="divider"></div>
+              <small>Restart at 4AM UTC</small>
+            </div>
+            <div class="tile">
+              <strong>Resource Monitor</strong>
+              <div class="divider"></div>
+              <small>Live CPU/RAM/Disk graphs</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2 class="section-title" data-animate>Control without complexity</h2>
+        <p class="section-sub" data-animate>
+          Our platform leverages the power of Pterodactyl — a modern, open‑source panel trusted globally. Create, customize, and control servers with ease. No advanced knowledge required.
+        </p>
+        <ul style="display:grid;gap:10px;color:#cdd6f6" data-animate>
+          <li>Secure containerized isolation</li>
+          <li>Real‑time console and metrics</li>
+          <li>One‑click eggs and modpacks</li>
+          <li>Granular sub‑user permissions</li>
+        </ul>
+        <div class="hero-cta" data-animate>
+          <a class="btn primary" href="#pricing">Start Hosting</a>
+          <a class="btn" href="#">Try the Demo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Games -->
+  <section id="games">
+    <div class="container">
+      <h2 class="section-title" data-animate>Popular games we host</h2>
+      <p class="section-sub" data-animate>From survival worlds to competitive arenas — we power it all.</p>
+      <div class="games" data-animate>
+        <div class="game"><span class="dot"></span> Minecraft</div>
+        <div class="game"><span class="dot"></span> CS2</div>
+        <div class="game"><span class="dot"></span> Rust</div>
+        <div class="game"><span class="dot"></span> ARK: Survival Ascended</div>
+        <div class="game"><span class="dot"></span> Valheim</div>
+        <div class="game"><span class="dot"></span> Garry's Mod</div>
+        <div class="game"><span class="dot"></span> FiveM</div>
+        <div class="game"><span class="dot"></span> Project Zomboid</div>
+        <div class="game"><span class="dot"></span> Don't Starve Together</div>
+        <div class="game"><span class="dot"></span> Satisfactory</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing">
+    <div class="container">
+      <div class="pricing-head" data-animate>
+        <div>
+          <h2 class="section-title">Simple, transparent pricing</h2>
+          <p class="section-sub">Scale up anytime. No hidden fees, ever.</p>
+        </div>
+        <div class="toggle">
+          <span>Monthly</span>
+          <div class="switch" id="priceSwitch" role="switch" aria-checked="false" tabindex="0"></div>
+          <span>Yearly <span class="tag" style="margin-left:6px">Save 15%</span></span>
+        </div>
+      </div>
+      <div class="plans" data-animate>
+        <div class="plan">
+          <div class="head">
+            <h4>Nano</h4>
+            <div class="price"><span class="currency">$</span><span class="amount" data-month="3.99" data-year="3.39">3.99</span><span class="period">/mo</span></div>
+          </div>
+          <div class="body">
+            <div class="feat"><span class="tick">✔</span> 1 vCPU • 2 GB RAM</div>
+            <div class="feat"><span class="tick">✔</span> 20 GB NVMe</div>
+            <div class="feat"><span class="tick">✔</span> DDoS Protection</div>
+            <div class="feat"><span class="tick">✔</span> 1 Backup Slot</div>
+          </div>
+          <div class="cta"><a class="btn primary" href="#">Choose Nano</a></div>
+        </div>
+        <div class="plan highlight">
+          <div class="head">
+            <h4>Gamer</h4>
+            <div class="price"><span class="currency">$</span><span class="amount" data-month="7.99" data-year="6.79">7.99</span><span class="period">/mo</span></div>
+          </div>
+          <div class="body">
+            <div class="feat"><span class="tick">✔</span> 2 vCPU • 4 GB RAM</div>
+            <div class="feat"><span class="tick">✔</span> 40 GB NVMe</div>
+            <div class="feat"><span class="tick">✔</span> DDoS Protection</div>
+            <div class="feat"><span class="tick">✔</span> 3 Backup Slots</div>
+          </div>
+          <div class="cta"><a class="btn primary" href="#">Choose Gamer</a></div>
+        </div>
+        <div class="plan">
+          <div class="head">
+            <h4>Pro</h4>
+            <div class="price"><span class="currency">$</span><span class="amount" data-month="14.99" data-year="12.74">14.99</span><span class="period">/mo</span></div>
+          </div>
+          <div class="body">
+            <div class="feat"><span class="tick">✔</span> 4 vCPU • 8 GB RAM</div>
+            <div class="feat"><span class="tick">✔</span> 80 GB NVMe</div>
+            <div class="feat"><span class="tick">✔</span> DDoS + Firewall</div>
+            <div class="feat"><span class="tick">✔</span> 5 Backup Slots</div>
+          </div>
+          <div class="cta"><a class="btn primary" href="#">Choose Pro</a></div>
+        </div>
+        <div class="plan">
+          <div class="head">
+            <h4>Enterprise</h4>
+            <div class="price"><span class="currency">$</span><span class="amount" data-month="29.99" data-year="25.49">29.99</span><span class="period">/mo</span></div>
+          </div>
+          <div class="body">
+            <div class="feat"><span class="tick">✔</span> 8 vCPU • 16 GB RAM</div>
+            <div class="feat"><span class="tick">✔</span> 160 GB NVMe</div>
+            <div class="feat"><span class="tick">✔</span> Priority Support</div>
+            <div class="feat"><span class="tick">✔</span> 10 Backup Slots</div>
+          </div>
+          <div class="cta"><a class="btn primary" href="#">Contact Sales</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Network -->
+  <section id="network" class="network">
+    <div class="container">
+      <h2 class="section-title" data-animate>Global network. Local latency.</h2>
+      <p class="section-sub" data-animate>
+        Built on cutting‑edge hardware and high‑speed links for smooth gameplay. 99.9% uptime with proactive monitoring.
+      </p>
+      <div class="map" data-animate>
+        <div class="pulse" style="left:24%;top:34%"></div>
+        <div class="pulse" style="left:52%;top:38%"></div>
+        <div class="pulse" style="left:76%;top:46%"></div>
+        <div class="pulse" style="left:58%;top:64%"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4, minmax(0,1fr));gap:12px;margin-top:14px" data-animate>
+        <div class="card"><strong>Frankfurt</strong><div class="divider"></div><small class="mono">Avg ping: 18 ms</small></div>
+        <div class="card"><strong>Singapore</strong><div class="divider"></div><small class="mono">Avg ping: 26 ms</small></div>
+        <div class="card"><strong>New York</strong><div class="divider"></div><small class="mono">Avg ping: 22 ms</small></div>
+        <div class="card"><strong>São Paulo</strong><div class="divider"></div><small class="mono">Avg ping: 34 ms</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials">
+    <div class="container">
+      <h2 class="section-title" data-animate>Loved by communities</h2>
+      <p class="section-sub" data-animate>Hear from people who build on NoneCloud.</p>
+      <div class="testimonials" data-animate>
+        <div class="quote">
+          <div>“Latency dropped by half after moving our Minecraft network. Smooth TPS even with 150+ players.”</div>
+          <div class="who"><div class="avatar"></div><div><strong>PixelForge</strong><br/><small>MC Server Owner</small></div></div>
+        </div>
+        <div class="quote">
+          <div>“The Pterodactyl integration is seamless. Backups and schedules save us hours every week.”</div>
+          <div class="who"><div class="avatar"></div><div><strong>TeamAstra</strong><br/><small>Rust Admins</small></div></div>
+        </div>
+        <div class="quote">
+          <div>“Support on Discord is fantastic. They helped migrate our CS2 config in minutes.”</div>
+          <div class="who"><div class="avatar"></div><div><strong>ClutchHub</strong><br/><small>CS2 Community</small></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container">
+      <h2 class="section-title" data-animate>Frequently asked questions</h2>
+      <p class="section-sub" data-animate>Everything you need to know about hosting with NoneCloud.</p>
+      <div class="faq">
+        <div class="qa" data-animate>
+          <button aria-expanded="false"><span>What games do you support?</span><span>＋</span></button>
+          <div class="answer">We support Minecraft (all editions), CS2, Rust, Valheim, ARK: Survival Ascended, Garry’s Mod, FiveM, Project Zomboid, and many more. If your game runs on Pterodactyl, we can host it.</div>
+        </div>
+        <div class="qa" data-animate>
+          <button aria-expanded="false"><span>How fast is setup?</span><span>＋</span></button>
+          <div class="answer">Servers are provisioned instantly after payment. You’ll receive panel access and can start right away.</div>
+        </div>
+        <div class="qa" data-animate>
+          <button aria-expanded="false"><span>Do you provide DDoS protection?</span><span>＋</span></button>
+          <div class="answer">Yes. Advanced DDoS mitigation and firewall configurations protect your servers from attacks without impacting performance.</div>
+        </div>
+        <div class="qa" data-animate>
+          <button aria-expanded="false"><span>Can I upgrade later?</span><span>＋</span></button>
+          <div class="answer">Absolutely. You can upgrade resources or switch plans at any time from your billing portal.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="contact">
+    <div class="container cta">
+      <div class="row">
+        <div>
+          <h3>Ready to launch your server?</h3>
+          <p style="color:#cdd6f6;max-width:56ch">Join NoneCloud today and power your game servers with the perfect blend of performance, security, and ease of use — all managed through the industry‑leading Pterodactyl Panel.</p>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center">
+          <a class="btn primary" href="#pricing">Get Started</a>
+          <a class="btn" href="#">Open a Ticket</a>
+          <a class="btn" href="#">Join Discord</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container foot">
+      <div>
+        <div class="brand" style="margin-bottom:10px">
+          <div class="logo" aria-hidden="true"></div>
+          <strong>NoneCloud</strong>
+        </div>
+        <small>Premium game hosting for communities and creators.</small>
+        <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+          <span class="tag">PCI‑DSS Ready</span>
+          <span class="tag">GDPR</span>
+          <span class="tag">99.9% SLA</span>
+        </div>
+      </div>
+      <div>
+        <strong>Product</strong>
+        <div class="divider"></div>
+        <a href="#features">Features</a><br/>
+        <a href="#pricing">Pricing</a><br/>
+        <a href="#panel">Panel</a>
+      </div>
+      <div>
+        <strong>Company</strong>
+        <div class="divider"></div>
+        <a href="#network">Network</a><br/>
+        <a href="#testimonials">Customers</a><br/>
+        <a href="#contact">Contact</a>
+      </div>
+      <div>
+        <strong>Legal</strong>
+        <div class="divider"></div>
+        <a href="#">Terms</a><br/>
+        <a href="#">Privacy</a><br/>
+        <a href="#">Status</a>
+      </div>
+    </div>
+    <div class="container" style="margin-top:24px;color:#aeb9dc">
+      <small>© <span id="year"></span> NoneCloud. All rights reserved. Pterodactyl is a trademark of its respective owners.</small>
+    </div>
+  </footer>
+
+  <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+
+  <!-- External libs -->
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
+  <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+
+  <!-- App JS -->
+  <script>
+    // Utilities
+    const selectAll = (q, el=document) => Array.from(el.querySelectorAll(q));
+    const select = (q, el=document) => el.querySelector(q);
+
+    // Preloader
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const pre = select('#preloader');
+        pre.style.opacity = '0';
+        pre.style.pointerEvents = 'none';
+        setTimeout(()=> pre.remove(), 400);
+      }, 350);
+    });
+
+    // Year
+    select('#year').textContent = new Date().getFullYear();
+
+    // Typed text
+    new Typed('#typed', {
+      strings: ['Minecraft', 'CS2', 'Rust', 'Valheim', 'FiveM', 'Garry\'s Mod'],
+      typeSpeed: 42,
+      backSpeed: 24,
+      backDelay: 1400,
+      loop: true,
+      smartBackspace: true
+    });
+
+    // Menu toggle (basic)
+    select('#mobileToggle').addEventListener('click', () => {
+      const menu = document.createElement('div');
+      menu.style.position = 'fixed';
+      menu.style.inset = '64px 12px 12px 12px';
+      menu.style.background = '#0b1020ee';
+      menu.style.backdropFilter = 'blur(10px)';
+      menu.style.border = '1px solid #ffffff22';
+      menu.style.borderRadius = '14px';
+      menu.style.padding = '18px';
+      menu.style.display = 'grid';
+      menu.style.gap = '10px';
+      menu.innerHTML = `
+        <a href="#features">Features</a>
+        <a href="#games">Games</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#panel">Panel</a>
+        <a href="#network">Network</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+        <button class="btn" id="closeMenu" style="margin-top:10px">Close</button>
+      `;
+      document.body.appendChild(menu);
+      select('#closeMenu').addEventListener('click', () => menu.remove());
+    });
+
+    // GSAP reveal animations
+    gsap.registerPlugin(ScrollTrigger);
+    selectAll('[data-animate]').forEach((el) => {
+      gsap.fromTo(el, {autoAlpha:0, y:24}, {
+        autoAlpha:1, y:0, duration:0.8, ease:'power3.out',
+        scrollTrigger:{trigger: el, start:'top 85%'}
+      });
+    });
+
+    // Tilt
+    VanillaTilt.init(selectAll('[data-tilt]'), {max:8, speed:400, glare:true, 'max-glare':0.2});
+
+    // Pricing toggle
+    const priceSwitch = select('#priceSwitch');
+    const amounts = selectAll('.amount');
+    const period = selectAll('.period');
+    const setPrices = (yearly) => {
+      amounts.forEach(el => {
+        el.textContent = yearly ? el.dataset.year : el.dataset.month;
+      });
+      period.forEach(el => el.textContent = yearly ? '/mo billed yearly' : '/mo');
+      priceSwitch.classList.toggle('active', yearly);
+      priceSwitch.setAttribute('aria-checked', String(yearly));
+    };
+    priceSwitch.addEventListener('click', () => setPrices(!priceSwitch.classList.contains('active')));
+    priceSwitch.addEventListener('keydown', (e) => { if(e.key==='Enter' || e.key===' '){ e.preventDefault(); priceSwitch.click(); }});
+
+    // FAQ accordion
+    selectAll('.qa').forEach((qa) => {
+      const btn = qa.querySelector('button');
+      btn.addEventListener('click', () => {
+        const open = qa.classList.toggle('open');
+        btn.setAttribute('aria-expanded', String(open));
+      });
+    });
+
+    // Back to top
+    const toTop = select('#toTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 600) toTop.classList.add('show'); else toTop.classList.remove('show');
+    });
+    toTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+    // THREE.js hero background
+    const canvas = select('#hero3d');
+    let renderer, scene, camera, animationFrameId;
+
+    function initThree(){
+      scene = new THREE.Scene();
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 200);
+      camera.position.set(0, 0.2, 6.5);
+
+      renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+      renderer.setSize(w, h, false);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      const ambient = new THREE.AmbientLight(0x8ab4f8, 0.6); scene.add(ambient);
+      const keyLight = new THREE.PointLight(0x22d3ee, 18, 30); keyLight.position.set(6, 6, 6); scene.add(keyLight);
+      const rimLight = new THREE.PointLight(0x7c3aed, 10, 30); rimLight.position.set(-6, -4, -6); scene.add(rimLight);
+
+      const group = new THREE.Group(); scene.add(group);
+
+      const geometry = new THREE.TorusKnotGeometry(1.2, 0.36, 220, 32, 2, 3);
+      const material = new THREE.MeshPhysicalMaterial({
+        color: new THREE.Color('#7c3aed'),
+        emissive: new THREE.Color('#3b82f6'),
+        emissiveIntensity: 0.25,
+        metalness: 0.6,
+        roughness: 0.25,
+        clearcoat: 0.6,
+        clearcoatRoughness: 0.2
+      });
+      const knot = new THREE.Mesh(geometry, material);
+      group.add(knot);
+
+      // Starfield (2D/3D effect)
+      const starGeometry = new THREE.BufferGeometry();
+      const starCount = 1200;
+      const positions = new Float32Array(starCount * 3);
+      for(let i=0;i<starCount;i++){
+        const r = THREE.MathUtils.randFloat(8, 36);
+        const theta = THREE.MathUtils.randFloat(0, Math.PI*2);
+        const phi = THREE.MathUtils.randFloat(0, Math.PI);
+        positions[i*3+0] = r * Math.sin(phi) * Math.cos(theta);
+        positions[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
+        positions[i*3+2] = r * Math.cos(phi);
+      }
+      starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      const starMaterial = new THREE.PointsMaterial({color:0xaad4ff, size:0.02});
+      const stars = new THREE.Points(starGeometry, starMaterial);
+      scene.add(stars);
+
+      const mouse = {x:0, y:0};
+      window.addEventListener('pointermove', (e)=>{
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = (e.clientX - rect.left) / rect.width * 2 - 1;
+        mouse.y = (e.clientY - rect.top) / rect.height * 2 - 1;
+      });
+
+      function animate(){
+        animationFrameId = requestAnimationFrame(animate);
+        const t = performance.now() * 0.0015;
+        knot.rotation.x = t * 0.5 + mouse.y * 0.2;
+        knot.rotation.y = t * 0.7 + mouse.x * 0.3;
+        stars.rotation.y = t * 0.05;
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      function onResize(){
+        const w = canvas.clientWidth, h = canvas.clientHeight;
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h; camera.updateProjectionMatrix();
+      }
+      const ro = new ResizeObserver(onResize); ro.observe(canvas);
+
+      // Connect GSAP scroll to subtle camera dolly
+      gsap.to(camera.position, {
+        z: 7.5,
+        scrollTrigger: {trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true}
+      });
+    }
+
+    // Initialize Three after fonts for layout stability
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(initThree);
+    } else {
+      initThree();
+    }
+
+    // Smooth scroll for in-page links
+    selectAll('a[href^="#"]').forEach(a => a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href');
+      if (!id || id === '#') return;
+      const el = select(id);
+      if (el) {
+        e.preventDefault();
+        el.scrollIntoView({behavior:'smooth'});
+      }
+    }));
+  </script>
+</body>
+</html>
