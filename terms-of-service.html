@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - NoneCloud</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #06b6d4;
+            --dark-bg: #0f0f23;
+            --darker-bg: #08081a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --gradient-1: linear-gradient(135deg, #6366f1, #8b5cf6);
+            --gradient-2: linear-gradient(135deg, #06b6d4, #3b82f6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .content {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .content h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            color: var(--primary-color);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .content ul, .content ol {
+            margin: 1rem 0 1rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .content strong {
+            color: var(--text-primary);
+        }
+
+        .highlight {
+            background: rgba(99, 102, 241, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-color);
+            margin: 2rem 0;
+        }
+
+        .footer {
+            background: var(--darker-bg);
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gradient-1);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .container {
+                padding: 6rem 1rem 2rem;
+            }
+            
+            .content {
+                padding: 2rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="nonecloud-website.html" class="logo">NoneCloud</a>
+            <ul class="nav-menu">
+                <li><a href="nonecloud-website.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="help-center.html">Support</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <a href="nonecloud-website.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+
+        <div class="page-header">
+            <h1>Terms of Service</h1>
+            <p>Please read these terms carefully before using NoneCloud's game hosting services</p>
+        </div>
+
+        <div class="content">
+            <div class="highlight">
+                <strong>Last Updated:</strong> December 2024<br>
+                <strong>Effective Date:</strong> December 2024
+            </div>
+
+            <h2>1. Acceptance of Terms</h2>
+            <p>By accessing and using NoneCloud's services, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.</p>
+
+            <h2>2. Service Description</h2>
+            <p>NoneCloud provides game server hosting services powered by Pterodactyl Panel, including but not limited to:</p>
+            <ul>
+                <li>Minecraft server hosting</li>
+                <li>Counter-Strike 2 (CS2) server hosting</li>
+                <li>Multi-game server hosting (Rust, ARK, Garry's Mod, etc.)</li>
+                <li>Server management through Pterodactyl Panel</li>
+                <li>DDoS protection and security services</li>
+                <li>Automated backup services</li>
+                <li>24/7 technical support</li>
+            </ul>
+
+            <h2>3. Account Registration</h2>
+            <h3>3.1 Account Requirements</h3>
+            <p>To use our services, you must:</p>
+            <ul>
+                <li>Be at least 18 years old or have parental consent</li>
+                <li>Provide accurate and complete registration information</li>
+                <li>Maintain the security of your account credentials</li>
+                <li>Accept responsibility for all activities under your account</li>
+            </ul>
+
+            <h3>3.2 Account Security</h3>
+            <p>You are responsible for maintaining the confidentiality of your account information and password. NoneCloud cannot and will not be liable for any loss or damage arising from your failure to comply with this security obligation.</p>
+
+            <h2>4. Service Usage</h2>
+            <h3>4.1 Acceptable Use</h3>
+            <p>You agree to use our services only for lawful purposes and in accordance with these Terms. You agree not to use the service:</p>
+            <ul>
+                <li>For any unlawful purpose or to solicit others to perform unlawful acts</li>
+                <li>To violate any international, federal, provincial, or state regulations, rules, laws, or local ordinances</li>
+                <li>To infringe upon or violate our intellectual property rights or the intellectual property rights of others</li>
+                <li>To harass, abuse, insult, harm, defame, slander, disparage, intimidate, or discriminate</li>
+                <li>To submit false or misleading information</li>
+                <li>To upload or transmit viruses or any other type of malicious code</li>
+                <li>To spam, phish, pharm, pretext, spider, crawl, or scrape</li>
+                <li>For any obscene or immoral purpose or to encourage obscene or immoral conduct</li>
+            </ul>
+
+            <h3>4.2 Resource Usage</h3>
+            <p>Your usage must not exceed the allocated resources for your chosen plan. Excessive resource usage may result in service suspension or additional charges.</p>
+
+            <h2>5. Payment Terms</h2>
+            <h3>5.1 Billing</h3>
+            <p>Services are billed in advance on a monthly basis unless otherwise agreed upon. All fees are non-refundable except as expressly stated in our Refund Policy.</p>
+
+            <h3>5.2 Payment Methods</h3>
+            <p>We accept various payment methods including credit cards, PayPal, and cryptocurrency. All payments must be made in USD unless otherwise specified.</p>
+
+            <h3>5.3 Late Payments</h3>
+            <p>Services may be suspended for accounts with overdue payments. A grace period of 7 days is provided before service suspension.</p>
+
+            <h2>6. Service Level Agreement (SLA)</h2>
+            <h3>6.1 Uptime Guarantee</h3>
+            <p>NoneCloud guarantees 99.9% uptime for all hosting services. In the event of downtime exceeding this threshold, service credits may be issued as compensation.</p>
+
+            <h3>6.2 Maintenance</h3>
+            <p>Scheduled maintenance will be announced at least 24 hours in advance. Emergency maintenance may be performed without prior notice.</p>
+
+            <h2>7. Data and Backups</h2>
+            <h3>7.1 Data Responsibility</h3>
+            <p>While we provide automated backup services, you are ultimately responsible for maintaining your own backups of critical data.</p>
+
+            <h3>7.2 Data Retention</h3>
+            <p>Upon service termination, data will be retained for 7 days before permanent deletion. It is your responsibility to retrieve your data within this period.</p>
+
+            <h2>8. Intellectual Property</h2>
+            <p>The service and its original content, features, and functionality are and will remain the exclusive property of NoneCloud and its licensors. The service is protected by copyright, trademark, and other laws.</p>
+
+            <h2>9. Privacy Policy</h2>
+            <p>Your privacy is important to us. Please review our Privacy Policy, which also governs your use of the service, to understand our practices.</p>
+
+            <h2>10. Termination</h2>
+            <h3>10.1 Termination by You</h3>
+            <p>You may terminate your account at any time by contacting our support team or through your account dashboard.</p>
+
+            <h3>10.2 Termination by Us</h3>
+            <p>We may terminate or suspend your account immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.</p>
+
+            <h2>11. Limitation of Liability</h2>
+            <p>In no event shall NoneCloud, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your use of the service.</p>
+
+            <h2>12. Disclaimer</h2>
+            <p>The information on this service is provided on an "as is" basis. To the fullest extent permitted by law, this company excludes all representations, warranties, conditions, and terms whether express or implied.</p>
+
+            <h2>13. Governing Law</h2>
+            <p>These Terms shall be interpreted and governed by the laws of the jurisdiction in which NoneCloud operates, without regard to its conflict of law provisions.</p>
+
+            <h2>14. Changes to Terms</h2>
+            <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will try to provide at least 30 days notice prior to any new terms taking effect.</p>
+
+            <h2>15. Contact Information</h2>
+            <p>If you have any questions about these Terms of Service, please contact us:</p>
+            <ul>
+                <li>Email: legal@nonecloud.com</li>
+                <li>Discord: Join our support server</li>
+                <li>Ticket System: Available through your account dashboard</li>
+            </ul>
+
+            <div class="highlight">
+                <p><strong>Important:</strong> By using NoneCloud's services, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 NoneCloud. All rights reserved.</p>
+    </footer>
+</body>
+</html>

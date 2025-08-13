@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - NoneCloud</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #06b6d4;
+            --dark-bg: #0f0f23;
+            --darker-bg: #08081a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --gradient-1: linear-gradient(135deg, #6366f1, #8b5cf6);
+            --gradient-2: linear-gradient(135deg, #06b6d4, #3b82f6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .contact-methods {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .contact-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .contact-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: var(--primary-color);
+        }
+
+        .contact-form {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--darker-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            background: var(--gradient-1);
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        .support-hours {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .support-hours h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .hours-item {
+            padding: 1rem;
+            background: var(--darker-bg);
+            border-radius: 10px;
+        }
+
+        .hours-item .method {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .hours-item .time {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gradient-1);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        .footer {
+            background: var(--darker-bg);
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .container {
+                padding: 6rem 1rem 2rem;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="nonecloud-website.html" class="logo">NoneCloud</a>
+            <ul class="nav-menu">
+                <li><a href="nonecloud-website.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="help-center.html">Support</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <a href="nonecloud-website.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+
+        <div class="page-header">
+            <h1>Contact Us</h1>
+            <p>Get in touch with our expert support team. We're here to help you succeed with your game hosting needs.</p>
+        </div>
+
+        <div class="support-hours">
+            <h2>Support Availability</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Our dedicated support team is available through multiple channels to assist you</p>
+            <div class="hours-grid">
+                <div class="hours-item">
+                    <div class="method">Discord Support</div>
+                    <div class="time">24/7 Community Help</div>
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <span style="color: #22c55e; font-size: 0.8rem;">Online</span>
+                    </div>
+                </div>
+                <div class="hours-item">
+                    <div class="method">Ticket System</div>
+                    <div class="time">24/7 Response</div>
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <span style="color: #22c55e; font-size: 0.8rem;">Available</span>
+                    </div>
+                </div>
+                <div class="hours-item">
+                    <div class="method">Live Chat</div>
+                    <div class="time">9 AM - 11 PM EST</div>
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <span style="color: #22c55e; font-size: 0.8rem;">Active</span>
+                    </div>
+                </div>
+                <div class="hours-item">
+                    <div class="method">Email Support</div>
+                    <div class="time">< 2 Hours Response</div>
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <span style="color: #22c55e; font-size: 0.8rem;">Monitored</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-methods">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fab fa-discord"></i>
+                    </div>
+                    <h3>Discord Community</h3>
+                    <p>Join our active Discord server for instant help from our community and support team.</p>
+                    <a href="#" class="contact-link">Join Discord Server</a>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <h3>Support Tickets</h3>
+                    <p>Create a support ticket for technical issues, billing questions, or account assistance.</p>
+                    <a href="#" class="contact-link">Open Support Ticket</a>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Live Chat</h3>
+                    <p>Chat directly with our support team for immediate assistance during business hours.</p>
+                    <a href="#" class="contact-link">Start Live Chat</a>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email Support</h3>
+                    <p>Send us an email for detailed inquiries or non-urgent matters.</p>
+                    <a href="mailto:support@nonecloud.com" class="contact-link">support@nonecloud.com</a>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Server Status</h3>
+                    <p>Check real-time status of our infrastructure and any ongoing maintenance.</p>
+                    <a href="server-status.html" class="contact-link">View Status Page</a>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Knowledge Base</h3>
+                    <p>Browse our comprehensive guides and tutorials for self-service support.</p>
+                    <a href="help-center.html" class="contact-link">Browse Knowledge Base</a>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h2 style="margin-bottom: 1.5rem; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Send us a Message</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Select a topic</option>
+                            <option value="technical">Technical Support</option>
+                            <option value="billing">Billing & Payments</option>
+                            <option value="sales">Sales Inquiry</option>
+                            <option value="feedback">Feedback & Suggestions</option>
+                            <option value="partnership">Partnership Opportunities</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="server-type">Server Type (if applicable)</label>
+                        <select id="server-type" name="server-type">
+                            <option value="">Select server type</option>
+                            <option value="minecraft">Minecraft</option>
+                            <option value="cs2">Counter-Strike 2</option>
+                            <option value="rust">Rust</option>
+                            <option value="ark">ARK: Survival Evolved</option>
+                            <option value="gmod">Garry's Mod</option>
+                            <option value="other">Other Game</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" placeholder="Please describe your question or issue in detail..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="contact-card" style="margin-top: 3rem;">
+            <div style="text-align: center;">
+                <h2 style="background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem;">Emergency Contact</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">For critical server outages or security emergencies affecting your services:</p>
+                <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                    <div>
+                        <strong>Emergency Email:</strong><br>
+                        <a href="mailto:emergency@nonecloud.com" class="contact-link">emergency@nonecloud.com</a>
+                    </div>
+                    <div>
+                        <strong>Priority Discord:</strong><br>
+                        <a href="#" class="contact-link">#emergency-support</a>
+                    </div>
+                </div>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 1rem;">
+                    <i class="fas fa-info-circle" style="color: var(--accent-color);"></i>
+                    Emergency contacts are monitored 24/7 for critical issues only
+                </p>
+            </div>
+        </div>
+
+        <div class="contact-card" style="margin-top: 2rem;">
+            <div style="text-align: center;">
+                <h2 style="background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem;">Business Inquiries</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">For partnerships, enterprise solutions, or media inquiries:</p>
+                <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                    <div>
+                        <strong>Business Development:</strong><br>
+                        <a href="mailto:business@nonecloud.com" class="contact-link">business@nonecloud.com</a>
+                    </div>
+                    <div>
+                        <strong>Media & Press:</strong><br>
+                        <a href="mailto:press@nonecloud.com" class="contact-link">press@nonecloud.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 NoneCloud. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Form submission handler
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Simulate form submission
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                submitBtn.textContent = 'Message Sent!';
+                submitBtn.style.background = '#22c55e';
+                
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.background = '';
+                    this.reset();
+                }, 2000);
+            }, 1000);
+        });
+
+        // Update status indicators dynamically
+        function updateStatusIndicators() {
+            const indicators = document.querySelectorAll('.status-dot');
+            const currentHour = new Date().getHours();
+            
+            indicators.forEach((dot, index) => {
+                if (index === 2) { // Live chat
+                    if (currentHour >= 9 && currentHour <= 23) {
+                        dot.style.background = '#22c55e';
+                        dot.nextElementSibling.textContent = 'Online';
+                        dot.nextElementSibling.style.color = '#22c55e';
+                    } else {
+                        dot.style.background = '#f59e0b';
+                        dot.nextElementSibling.textContent = 'Offline';
+                        dot.nextElementSibling.style.color = '#f59e0b';
+                    }
+                }
+            });
+        }
+
+        updateStatusIndicators();
+        setInterval(updateStatusIndicators, 60000); // Update every minute
+    </script>
+</body>
+</html>

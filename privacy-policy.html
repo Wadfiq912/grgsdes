@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - NoneCloud</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #06b6d4;
+            --dark-bg: #0f0f23;
+            --darker-bg: #08081a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --gradient-1: linear-gradient(135deg, #6366f1, #8b5cf6);
+            --gradient-2: linear-gradient(135deg, #06b6d4, #3b82f6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .content {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .content h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            color: var(--primary-color);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .content ul, .content ol {
+            margin: 1rem 0 1rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .content strong {
+            color: var(--text-primary);
+        }
+
+        .highlight {
+            background: rgba(99, 102, 241, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-color);
+            margin: 2rem 0;
+        }
+
+        .gdpr-section {
+            background: rgba(6, 182, 212, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-color);
+            margin: 2rem 0;
+        }
+
+        .footer {
+            background: var(--darker-bg);
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gradient-1);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .container {
+                padding: 6rem 1rem 2rem;
+            }
+            
+            .content {
+                padding: 2rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="nonecloud-website.html" class="logo">NoneCloud</a>
+            <ul class="nav-menu">
+                <li><a href="nonecloud-website.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="help-center.html">Support</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <a href="nonecloud-website.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+
+        <div class="page-header">
+            <h1>Privacy Policy</h1>
+            <p>Your privacy is important to us. This policy explains how we collect, use, and protect your personal information.</p>
+        </div>
+
+        <div class="content">
+            <div class="highlight">
+                <strong>Last Updated:</strong> December 2024<br>
+                <strong>Effective Date:</strong> December 2024
+            </div>
+
+            <h2>1. Introduction</h2>
+            <p>NoneCloud ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our game hosting services, including our website and Pterodactyl Panel interface.</p>
+
+            <h2>2. Information We Collect</h2>
+            <h3>2.1 Personal Information</h3>
+            <p>We may collect the following personal information:</p>
+            <ul>
+                <li><strong>Account Information:</strong> Name, email address, username, password</li>
+                <li><strong>Contact Information:</strong> Phone number, Discord username</li>
+                <li><strong>Billing Information:</strong> Payment details, billing address, transaction history</li>
+                <li><strong>Identity Verification:</strong> Government-issued ID for fraud prevention (when required)</li>
+            </ul>
+
+            <h3>2.2 Technical Information</h3>
+            <p>We automatically collect certain technical information:</p>
+            <ul>
+                <li><strong>Server Data:</strong> Server configurations, resource usage, performance metrics</li>
+                <li><strong>Log Data:</strong> IP addresses, browser type, access times, pages viewed</li>
+                <li><strong>Device Information:</strong> Operating system, device type, unique device identifiers</li>
+                <li><strong>Usage Data:</strong> Features used, time spent on platform, interaction patterns</li>
+            </ul>
+
+            <h3>2.3 Game Server Content</h3>
+            <p>We may have access to:</p>
+            <ul>
+                <li>Server files and configurations</li>
+                <li>Game world data and player information</li>
+                <li>Chat logs and communication data</li>
+                <li>Backup files and snapshots</li>
+            </ul>
+
+            <h2>3. How We Use Your Information</h2>
+            <p>We use your information for the following purposes:</p>
+            <ul>
+                <li><strong>Service Provision:</strong> To provide, maintain, and improve our hosting services</li>
+                <li><strong>Account Management:</strong> To create and manage your account, process payments</li>
+                <li><strong>Technical Support:</strong> To provide customer support and troubleshoot issues</li>
+                <li><strong>Security:</strong> To protect against fraud, unauthorized access, and security threats</li>
+                <li><strong>Communication:</strong> To send service updates, security alerts, and promotional materials</li>
+                <li><strong>Legal Compliance:</strong> To comply with legal obligations and enforce our terms</li>
+                <li><strong>Analytics:</strong> To analyze usage patterns and improve our services</li>
+            </ul>
+
+            <h2>4. Information Sharing and Disclosure</h2>
+            <p>We may share your information in the following circumstances:</p>
+            <ul>
+                <li><strong>Service Providers:</strong> With third-party vendors who assist in providing our services</li>
+                <li><strong>Payment Processors:</strong> With payment providers to process transactions</li>
+                <li><strong>Legal Requirements:</strong> When required by law or to protect our rights</li>
+                <li><strong>Business Transfers:</strong> In connection with mergers, acquisitions, or asset sales</li>
+                <li><strong>Consent:</strong> When you explicitly consent to sharing</li>
+            </ul>
+
+            <p>We <strong>never</strong> sell your personal information to third parties for marketing purposes.</p>
+
+            <div class="gdpr-section">
+                <h2>5. GDPR and Data Protection Rights</h2>
+                <p>If you are located in the European Union, you have the following rights under GDPR:</p>
+                <ul>
+                    <li><strong>Right of Access:</strong> You can request information about the personal data we hold</li>
+                    <li><strong>Right to Rectification:</strong> You can request correction of inaccurate data</li>
+                    <li><strong>Right to Erasure:</strong> You can request deletion of your personal data</li>
+                    <li><strong>Right to Restrict Processing:</strong> You can request limitation of data processing</li>
+                    <li><strong>Right to Data Portability:</strong> You can request transfer of your data</li>
+                    <li><strong>Right to Object:</strong> You can object to certain types of processing</li>
+                    <li><strong>Right to Withdraw Consent:</strong> You can withdraw consent at any time</li>
+                </ul>
+                <p>To exercise these rights, please contact us at <strong>privacy@nonecloud.com</strong></p>
+            </div>
+
+            <h2>6. Data Security</h2>
+            <p>We implement appropriate technical and organizational measures to protect your information:</p>
+            <ul>
+                <li><strong>Encryption:</strong> Data is encrypted in transit and at rest using industry-standard methods</li>
+                <li><strong>Access Controls:</strong> Strict access controls limit who can view your data</li>
+                <li><strong>Regular Audits:</strong> We conduct regular security assessments and audits</li>
+                <li><strong>Staff Training:</strong> Our team is trained on data protection best practices</li>
+                <li><strong>Incident Response:</strong> We have procedures for responding to security incidents</li>
+            </ul>
+
+            <h2>7. Data Retention</h2>
+            <p>We retain your information for as long as necessary to provide our services:</p>
+            <ul>
+                <li><strong>Account Data:</strong> Retained while your account is active</li>
+                <li><strong>Server Data:</strong> Retained for 30 days after service termination</li>
+                <li><strong>Backup Data:</strong> Retained for 7 days after service termination</li>
+                <li><strong>Billing Records:</strong> Retained for 7 years for tax and legal purposes</li>
+                <li><strong>Support Tickets:</strong> Retained for 2 years for service improvement</li>
+            </ul>
+
+            <h2>8. Cookies and Tracking Technologies</h2>
+            <p>We use cookies and similar technologies to:</p>
+            <ul>
+                <li>Remember your preferences and settings</li>
+                <li>Authenticate your account and maintain sessions</li>
+                <li>Analyze website usage and performance</li>
+                <li>Provide personalized content and advertisements</li>
+            </ul>
+            <p>You can control cookies through your browser settings, but some features may not function properly if disabled.</p>
+
+            <h2>9. Third-Party Services</h2>
+            <p>Our services may integrate with third-party platforms:</p>
+            <ul>
+                <li><strong>Payment Processors:</strong> PayPal, Stripe, cryptocurrency providers</li>
+                <li><strong>Analytics:</strong> Google Analytics, monitoring tools</li>
+                <li><strong>Communication:</strong> Discord, email services</li>
+                <li><strong>CDN Services:</strong> Content delivery networks for performance</li>
+            </ul>
+            <p>These third parties have their own privacy policies, which we encourage you to review.</p>
+
+            <h2>10. International Data Transfers</h2>
+            <p>Your information may be transferred to and processed in countries other than your country of residence. We ensure adequate protection through:</p>
+            <ul>
+                <li>Standard contractual clauses</li>
+                <li>Adequacy decisions by relevant authorities</li>
+                <li>Certification schemes and codes of conduct</li>
+            </ul>
+
+            <h2>11. Children's Privacy</h2>
+            <p>Our services are not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13. If we become aware that we have collected such information, we will take steps to delete it promptly.</p>
+
+            <h2>12. Changes to Privacy Policy</h2>
+            <p>We may update this Privacy Policy periodically. We will notify you of material changes by:</p>
+            <ul>
+                <li>Posting the updated policy on our website</li>
+                <li>Sending email notifications to registered users</li>
+                <li>Displaying notices in your account dashboard</li>
+            </ul>
+
+            <h2>13. Contact Information</h2>
+            <p>If you have questions about this Privacy Policy or our data practices, please contact us:</p>
+            <ul>
+                <li><strong>Email:</strong> privacy@nonecloud.com</li>
+                <li><strong>Data Protection Officer:</strong> dpo@nonecloud.com</li>
+                <li><strong>Support Ticket:</strong> Available through your account dashboard</li>
+                <li><strong>Discord:</strong> Join our support server</li>
+            </ul>
+
+            <h2>14. Supervisory Authority</h2>
+            <p>If you are located in the EU and believe we have not addressed your concerns, you have the right to lodge a complaint with your local data protection supervisory authority.</p>
+
+            <div class="highlight">
+                <p><strong>Your Privacy Matters:</strong> We are committed to transparency and protecting your personal information. If you have any questions or concerns about how we handle your data, please don't hesitate to contact us.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 NoneCloud. All rights reserved.</p>
+    </footer>
+</body>
+</html>

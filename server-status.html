@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Status - NoneCloud</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #06b6d4;
+            --dark-bg: #0f0f23;
+            --darker-bg: #08081a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --gradient-1: linear-gradient(135deg, #6366f1, #8b5cf6);
+            --gradient-2: linear-gradient(135deg, #06b6d4, #3b82f6);
+            --success-color: #22c55e;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .overall-status {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .status-dot.operational {
+            background: var(--success-color);
+        }
+
+        .status-dot.degraded {
+            background: var(--warning-color);
+        }
+
+        .status-dot.outage {
+            background: var(--error-color);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .services-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .service-item {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .service-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .service-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .service-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .service-details h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .service-details p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .service-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .uptime-stats {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 3rem;
+        }
+
+        .uptime-stats h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .uptime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .uptime-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--darker-bg);
+            border-radius: 15px;
+        }
+
+        .uptime-percentage {
+            font-size: 2rem;
+            font-weight: 900;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .uptime-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .incidents-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 3rem;
+        }
+
+        .incidents-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .incident-item {
+            padding: 1.5rem;
+            background: var(--darker-bg);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--success-color);
+        }
+
+        .incident-item.warning {
+            border-left-color: var(--warning-color);
+        }
+
+        .incident-item.error {
+            border-left-color: var(--error-color);
+        }
+
+        .incident-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .incident-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .incident-time {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .incident-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .incident-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success-color);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .maintenance-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 3rem;
+        }
+
+        .maintenance-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .maintenance-item {
+            padding: 1.5rem;
+            background: var(--darker-bg);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gradient-1);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        .footer {
+            background: var(--darker-bg);
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .subscribe-updates {
+            text-align: center;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .subscribe-updates h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subscribe-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 400px;
+            margin: 1.5rem auto 0;
+        }
+
+        .subscribe-form input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: var(--darker-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--text-primary);
+        }
+
+        .subscribe-form button {
+            background: var(--gradient-1);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .subscribe-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        .last-updated {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .container {
+                padding: 6rem 1rem 2rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .service-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .subscribe-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="nonecloud-website.html" class="logo">NoneCloud</a>
+            <ul class="nav-menu">
+                <li><a href="nonecloud-website.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="help-center.html">Support</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <a href="nonecloud-website.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+
+        <div class="page-header">
+            <h1>Server Status</h1>
+            <p>Real-time status of NoneCloud's infrastructure and services. Check here for any ongoing issues or scheduled maintenance.</p>
+        </div>
+
+        <div class="overall-status">
+            <div class="status-indicator">
+                <div class="status-dot operational"></div>
+                All Systems Operational
+            </div>
+            <p style="color: var(--text-secondary);">All services are running normally with no reported issues.</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-item">
+                <div class="service-info">
+                    <div class="service-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="service-details">
+                        <h3>Game Server Hosting</h3>
+                        <p>Minecraft, CS2, and other game server hosting services</p>
+                    </div>
+                </div>
+                <div class="service-status">
+                    <div class="status-dot operational"></div>
+                    Operational
+                </div>
+            </div>
+
+            <div class="service-item">
+                <div class="service-info">
+                    <div class="service-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <div class="service-details">
+                        <h3>Pterodactyl Panel</h3>
+                        <p>Server management interface and control panel</p>
+                    </div>
+                </div>
+                <div class="service-status">
+                    <div class="status-dot operational"></div>
+                    Operational
+                </div>
+            </div>
+
+            <div class="service-item">
+                <div class="service-info">
+                    <div class="service-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="service-details">
+                        <h3>Website & API</h3>
+                        <p>Main website and API services</p>
+                    </div>
+                </div>
+                <div class="service-status">
+                    <div class="status-dot operational"></div>
+                    Operational
+                </div>
+            </div>
+
+            <div class="service-item">
+                <div class="service-info">
+                    <div class="service-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="service-details">
+                        <h3>Billing System</h3>
+                        <p>Payment processing and account management</p>
+                    </div>
+                </div>
+                <div class="service-status">
+                    <div class="status-dot operational"></div>
+                    Operational
+                </div>
+            </div>
+
+            <div class="service-item">
+                <div class="service-info">
+                    <div class="service-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <div class="service-details">
+                        <h3>Backup Services</h3>
+                        <p>Automated backup and restore functionality</p>
+                    </div>
+                </div>
+                <div class="service-status">
+                    <div class="status-dot operational"></div>
+                    Operational
+                </div>
+            </div>
+
+            <div class="service-item">
+                <div class="service-info">
+                    <div class="service-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="service-details">
+                        <h3>Support System</h3>
+                        <p>Discord, tickets, and live chat support</p>
+                    </div>
+                </div>
+                <div class="service-status">
+                    <div class="status-dot operational"></div>
+                    Operational
+                </div>
+            </div>
+        </div>
+
+        <div class="uptime-stats">
+            <h2>Uptime Statistics</h2>
+            <div class="uptime-grid">
+                <div class="uptime-card">
+                    <div class="uptime-percentage">99.98%</div>
+                    <div class="uptime-label">Last 30 Days</div>
+                </div>
+                <div class="uptime-card">
+                    <div class="uptime-percentage">99.96%</div>
+                    <div class="uptime-label">Last 90 Days</div>
+                </div>
+                <div class="uptime-card">
+                    <div class="uptime-percentage">99.95%</div>
+                    <div class="uptime-label">Last 365 Days</div>
+                </div>
+                <div class="uptime-card">
+                    <div class="uptime-percentage">99.94%</div>
+                    <div class="uptime-label">All Time</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="incidents-section">
+            <h2>Recent Incidents</h2>
+            
+            <div class="incident-item">
+                <div class="incident-header">
+                    <div class="incident-title">Minor Network Latency Issues</div>
+                    <div class="incident-time">Dec 15, 2024 - 14:30 UTC</div>
+                </div>
+                <div class="incident-description">
+                    Some users experienced slightly increased latency to game servers. The issue was resolved by optimizing network routing.
+                </div>
+                <div class="incident-status">
+                    <div class="status-dot operational"></div>
+                    Resolved
+                </div>
+            </div>
+
+            <div class="incident-item">
+                <div class="incident-header">
+                    <div class="incident-title">Pterodactyl Panel Performance Optimization</div>
+                    <div class="incident-time">Dec 12, 2024 - 09:15 UTC</div>
+                </div>
+                <div class="incident-description">
+                    Performed routine performance optimization on the Pterodactyl Panel. Users may have experienced brief slowdowns during this period.
+                </div>
+                <div class="incident-status">
+                    <div class="status-dot operational"></div>
+                    Completed
+                </div>
+            </div>
+
+            <div class="incident-item">
+                <div class="incident-header">
+                    <div class="incident-title">Database Maintenance</div>
+                    <div class="incident-time">Dec 8, 2024 - 02:00 UTC</div>
+                </div>
+                <div class="incident-description">
+                    Scheduled database maintenance completed successfully. All services remained operational throughout the maintenance window.
+                </div>
+                <div class="incident-status">
+                    <div class="status-dot operational"></div>
+                    Completed
+                </div>
+            </div>
+        </div>
+
+        <div class="maintenance-section">
+            <h2>Scheduled Maintenance</h2>
+            
+            <div class="maintenance-item">
+                <div class="incident-header">
+                    <div class="incident-title">Infrastructure Upgrade</div>
+                    <div class="incident-time">Dec 25, 2024 - 03:00 UTC</div>
+                </div>
+                <div class="incident-description">
+                    We will be upgrading our server infrastructure to improve performance and reliability. Expected downtime: 2 hours. All game servers will remain operational.
+                </div>
+                <div class="incident-status" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-color);">
+                    <i class="fas fa-calendar"></i>
+                    Scheduled
+                </div>
+            </div>
+
+            <div class="maintenance-item">
+                <div class="incident-header">
+                    <div class="incident-title">Security Updates</div>
+                    <div class="incident-time">Dec 30, 2024 - 01:00 UTC</div>
+                </div>
+                <div class="incident-description">
+                    Routine security updates and patches will be applied to all systems. Minimal impact expected on running services.
+                </div>
+                <div class="incident-status" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-color);">
+                    <i class="fas fa-calendar"></i>
+                    Scheduled
+                </div>
+            </div>
+        </div>
+
+        <div class="subscribe-updates">
+            <h2>Stay Updated</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Subscribe to receive notifications about service status updates and maintenance schedules.</p>
+            <div class="subscribe-form">
+                <input type="email" placeholder="Enter your email address">
+                <button type="submit">Subscribe</button>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 1rem;">
+                You can also follow us on Discord for real-time updates
+            </p>
+        </div>
+
+        <div class="last-updated">
+            <p>Last updated: <span id="lastUpdated">Dec 20, 2024 at 15:42 UTC</span></p>
+            <p style="margin-top: 0.5rem;">
+                <i class="fas fa-sync-alt"></i>
+                Auto-refresh every 30 seconds
+            </p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 NoneCloud. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Auto-refresh functionality
+        function updateLastRefresh() {
+            const now = new Date();
+            const utcTime = now.toUTCString().replace('GMT', 'UTC');
+            document.getElementById('lastUpdated').textContent = utcTime.slice(5, -4);
+        }
+
+        // Simulate status updates
+        function checkServiceStatus() {
+            // This would normally make API calls to check actual service status
+            // For demo purposes, we'll randomly simulate some status changes
+            
+            const services = document.querySelectorAll('.service-item');
+            services.forEach(service => {
+                const statusDot = service.querySelector('.status-dot');
+                const statusText = service.querySelector('.service-status');
+                
+                // 99% chance of staying operational
+                if (Math.random() < 0.99) {
+                    statusDot.className = 'status-dot operational';
+                    statusText.innerHTML = '<div class="status-dot operational"></div>Operational';
+                }
+            });
+            
+            updateLastRefresh();
+        }
+
+        // Update uptime statistics
+        function updateUptimeStats() {
+            const uptimeCards = document.querySelectorAll('.uptime-percentage');
+            const baseUptimes = [99.98, 99.96, 99.95, 99.94];
+            
+            uptimeCards.forEach((card, index) => {
+                // Slight random variation to simulate real data
+                const variation = (Math.random() - 0.5) * 0.02;
+                const newUptime = Math.max(99.90, Math.min(100, baseUptimes[index] + variation));
+                card.textContent = newUptime.toFixed(2) + '%';
+            });
+        }
+
+        // Email subscription
+        document.querySelector('.subscribe-form button').addEventListener('click', function(e) {
+            e.preventDefault();
+            const email = document.querySelector('.subscribe-form input').value;
+            
+            if (email && email.includes('@')) {
+                this.textContent = 'Subscribed!';
+                this.style.background = '#22c55e';
+                
+                setTimeout(() => {
+                    this.textContent = 'Subscribe';
+                    this.style.background = '';
+                    document.querySelector('.subscribe-form input').value = '';
+                }, 2000);
+            } else {
+                this.textContent = 'Invalid Email';
+                this.style.background = '#ef4444';
+                
+                setTimeout(() => {
+                    this.textContent = 'Subscribe';
+                    this.style.background = '';
+                }, 2000);
+            }
+        });
+
+        // Initialize and set up auto-refresh
+        updateLastRefresh();
+        updateUptimeStats();
+        
+        // Refresh every 30 seconds
+        setInterval(() => {
+            checkServiceStatus();
+            updateUptimeStats();
+        }, 30000);
+
+        // Add some visual feedback for the auto-refresh
+        const refreshIcon = document.querySelector('.fa-sync-alt');
+        setInterval(() => {
+            refreshIcon.style.animation = 'none';
+            setTimeout(() => {
+                refreshIcon.style.animation = 'spin 0.5s linear';
+            }, 10);
+        }, 30000);
+
+        // CSS for spin animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

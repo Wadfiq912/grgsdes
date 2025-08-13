@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - NoneCloud</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #06b6d4;
+            --dark-bg: #0f0f23;
+            --darker-bg: #08081a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --gradient-1: linear-gradient(135deg, #6366f1, #8b5cf6);
+            --gradient-2: linear-gradient(135deg, #06b6d4, #3b82f6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .content-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .content-card h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .team-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .team-avatar {
+            width: 100px;
+            height: 100px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .team-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-card .role {
+            color: var(--accent-color);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .team-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .value-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .value-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .value-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .value-card p {
+            color: var(--text-secondary);
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gradient-1);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        .footer {
+            background: var(--darker-bg);
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .container {
+                padding: 6rem 1rem 2rem;
+            }
+            
+            .content-card {
+                padding: 2rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="nonecloud-website.html" class="logo">NoneCloud</a>
+            <ul class="nav-menu">
+                <li><a href="nonecloud-website.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="help-center.html">Support</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <a href="nonecloud-website.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+
+        <div class="page-header">
+            <h1>About NoneCloud</h1>
+            <p>Empowering gamers worldwide with premium hosting infrastructure and exceptional service</p>
+        </div>
+
+        <section class="section">
+            <div class="content-card">
+                <h2>Our Story</h2>
+                <p>NoneCloud was founded by passionate gamers who understood the frustration of poor server performance, unreliable hosting, and lackluster support. We experienced firsthand the impact that server quality has on gaming communities, and we knew there had to be a better way.</p>
+                <p>Starting with a simple mission to provide reliable, high-performance game hosting, we've grown into a trusted provider serving thousands of gaming communities worldwide. Our journey began with Minecraft hosting, but our passion for excellence quickly expanded to include CS2, Rust, ARK, and many other popular games.</p>
+                <p>What sets us apart is our commitment to the gaming community. We're not just a hosting company – we're gamers ourselves, and we understand what it takes to create memorable gaming experiences.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="number">99.9%</div>
+                    <div class="label">Uptime Guarantee</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">1000+</div>
+                    <div class="label">Happy Customers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">24/7</div>
+                    <div class="label">Expert Support</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">50+</div>
+                    <div class="label">Game Types Supported</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="content-card">
+                <h2>Our Mission</h2>
+                <p>To provide gamers and server administrators with the most reliable, high-performance, and user-friendly hosting platform available. We believe that great gaming experiences start with exceptional infrastructure, and we're committed to delivering exactly that.</p>
+                <p>Every decision we make is guided by our core principle: putting the gaming community first. Whether it's investing in cutting-edge hardware, developing intuitive management tools, or providing round-the-clock support, everything we do is designed to enhance your gaming experience.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="content-card">
+                <h2>Our Values</h2>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Performance First</h3>
+                    <p>We use only the latest hardware and optimize every aspect of our infrastructure to deliver unmatched performance for your game servers.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Reliability & Security</h3>
+                    <p>Your servers and data are protected with enterprise-grade security measures and backed by our 99.9% uptime guarantee.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Community Focus</h3>
+                    <p>We're part of the gaming community, and we're dedicated to supporting fellow gamers with exceptional service and genuine care.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Innovation</h3>
+                    <p>We continuously innovate and improve our platform, integrating the latest technologies to stay ahead of gaming trends.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Transparency</h3>
+                    <p>We believe in honest communication, clear pricing, and transparent policies. No hidden fees, no surprises.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>24/7 Support</h3>
+                    <p>Our expert support team is available around the clock to help you with any questions or issues you might encounter.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="content-card">
+                <h2>Our Team</h2>
+                <p>Behind NoneCloud is a dedicated team of gaming enthusiasts, system administrators, and customer service professionals who share a passion for delivering exceptional hosting experiences.</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Alex Chen</h3>
+                    <div class="role">Founder & CEO</div>
+                    <p>Passionate gamer and entrepreneur with 10+ years in hosting infrastructure. Leads our vision of providing world-class gaming hosting solutions.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Sarah Johnson</h3>
+                    <div class="role">CTO</div>
+                    <p>Expert system architect specializing in high-performance gaming infrastructure. Ensures our platform runs smoothly and efficiently.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Mike Rodriguez</h3>
+                    <div class="role">Head of Support</div>
+                    <p>Gaming veteran with extensive experience in server administration. Leads our 24/7 support team to provide exceptional customer service.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Emily Zhang</h3>
+                    <div class="role">Security Engineer</div>
+                    <p>Cybersecurity specialist focused on protecting our infrastructure and customer data with cutting-edge security measures.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="content-card">
+                <h2>Why Choose NoneCloud?</h2>
+                <p>In a crowded hosting market, NoneCloud stands out through our unwavering commitment to the gaming community. Here's what makes us different:</p>
+                <ul style="margin: 1rem 0 1rem 2rem; color: var(--text-secondary);">
+                    <li><strong style="color: var(--text-primary);">Gaming-First Approach:</strong> Every aspect of our service is optimized specifically for gaming workloads</li>
+                    <li><strong style="color: var(--text-primary);">Pterodactyl Integration:</strong> We leverage the power of the industry-leading Pterodactyl Panel for seamless server management</li>
+                    <li><strong style="color: var(--text-primary);">Performance Obsessed:</strong> We use only premium hardware and network infrastructure to ensure the best gaming experience</li>
+                    <li><strong style="color: var(--text-primary);">Community Driven:</strong> We listen to our customers and continuously improve based on community feedback</li>
+                    <li><strong style="color: var(--text-primary);">Transparent Pricing:</strong> No hidden fees, no surprise charges – just honest, competitive pricing</li>
+                </ul>
+                <p>When you choose NoneCloud, you're not just getting a hosting provider – you're joining a community of gamers who are passionate about creating amazing gaming experiences.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="content-card">
+                <h2>Join the NoneCloud Community</h2>
+                <p>Ready to experience the difference that premium game hosting can make? Join thousands of satisfied customers who trust NoneCloud for their gaming infrastructure needs.</p>
+                <p>Whether you're running a small private server for friends or managing a large gaming community, we have the tools, infrastructure, and expertise to help you succeed.</p>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="nonecloud-website.html#pricing" style="background: var(--gradient-1); color: white; padding: 1rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 600; display: inline-block; transition: all 0.3s ease;">
+                        Get Started Today
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 NoneCloud. All rights reserved.</p>
+    </footer>
+</body>
+</html>

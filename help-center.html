@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center - NoneCloud</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #06b6d4;
+            --dark-bg: #0f0f23;
+            --darker-bg: #08081a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --gradient-1: linear-gradient(135deg, #6366f1, #8b5cf6);
+            --gradient-2: linear-gradient(135deg, #06b6d4, #3b82f6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .search-box {
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .category-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .article-count {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .popular-articles {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 3rem;
+        }
+
+        .popular-articles h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .articles-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .article-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--darker-bg);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .article-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(5px);
+        }
+
+        .article-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .article-content {
+            flex: 1;
+        }
+
+        .article-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .article-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .faq-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 3rem;
+        }
+
+        .faq-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 1rem;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: var(--primary-color);
+        }
+
+        .faq-answer {
+            padding: 0 0 1rem 0;
+            color: var(--text-secondary);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .faq-answer.active {
+            display: block;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gradient-1);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        .footer {
+            background: var(--darker-bg);
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .contact-support {
+            text-align: center;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-support h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .support-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .support-btn {
+            background: var(--gradient-2);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .support-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .container {
+                padding: 6rem 1rem 2rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .support-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="nonecloud-website.html" class="logo">NoneCloud</a>
+            <ul class="nav-menu">
+                <li><a href="nonecloud-website.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="help-center.html">Support</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <a href="nonecloud-website.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+
+        <div class="page-header">
+            <h1>Help Center</h1>
+            <p>Find answers to common questions, browse our knowledge base, and get the help you need to succeed with NoneCloud hosting.</p>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search for articles, guides, or questions..." id="searchInput">
+            </div>
+        </div>
+
+        <div class="categories-grid">
+            <div class="category-card" onclick="showCategory('getting-started')">
+                <div class="category-icon">
+                    <i class="fas fa-play"></i>
+                </div>
+                <h3>Getting Started</h3>
+                <p>Learn the basics of setting up and managing your game servers with NoneCloud.</p>
+                <div class="article-count">12 articles</div>
+            </div>
+
+            <div class="category-card" onclick="showCategory('minecraft')">
+                <div class="category-icon">
+                    <i class="fas fa-cube"></i>
+                </div>
+                <h3>Minecraft Hosting</h3>
+                <p>Complete guides for Minecraft server setup, plugins, mods, and optimization.</p>
+                <div class="article-count">18 articles</div>
+            </div>
+
+            <div class="category-card" onclick="showCategory('cs2')">
+                <div class="category-icon">
+                    <i class="fas fa-crosshairs"></i>
+                </div>
+                <h3>CS2 Server Setup</h3>
+                <p>Everything you need to know about hosting Counter-Strike 2 servers.</p>
+                <div class="article-count">8 articles</div>
+            </div>
+
+            <div class="category-card" onclick="showCategory('pterodactyl')">
+                <div class="category-icon">
+                    <i class="fas fa-cog"></i>
+                </div>
+                <h3>Pterodactyl Panel</h3>
+                <p>Master the Pterodactyl Panel with our comprehensive tutorials and tips.</p>
+                <div class="article-count">15 articles</div>
+            </div>
+
+            <div class="category-card" onclick="showCategory('billing')">
+                <div class="category-icon">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <h3>Billing & Account</h3>
+                <p>Manage your account, payments, and billing information with ease.</p>
+                <div class="article-count">10 articles</div>
+            </div>
+
+            <div class="category-card" onclick="showCategory('troubleshooting')">
+                <div class="category-icon">
+                    <i class="fas fa-wrench"></i>
+                </div>
+                <h3>Troubleshooting</h3>
+                <p>Solve common issues and optimize your server performance.</p>
+                <div class="article-count">22 articles</div>
+            </div>
+        </div>
+
+        <div class="popular-articles">
+            <h2>Popular Articles</h2>
+            <div class="articles-list">
+                <div class="article-item">
+                    <div class="article-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="article-content">
+                        <div class="article-title">How to Set Up Your First Minecraft Server</div>
+                        <div class="article-desc">Step-by-step guide to creating and configuring your first Minecraft server</div>
+                    </div>
+                </div>
+
+                <div class="article-item">
+                    <div class="article-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="article-content">
+                        <div class="article-title">Installing Plugins with Pterodactyl Panel</div>
+                        <div class="article-desc">Learn how to easily install and manage plugins through the panel</div>
+                    </div>
+                </div>
+
+                <div class="article-item">
+                    <div class="article-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <div class="article-content">
+                        <div class="article-title">Optimizing Server Performance</div>
+                        <div class="article-desc">Tips and tricks to improve your server's performance and reduce lag</div>
+                    </div>
+                </div>
+
+                <div class="article-item">
+                    <div class="article-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="article-content">
+                        <div class="article-title">Managing Player Permissions</div>
+                        <div class="article-desc">Set up proper permission systems for your game server</div>
+                    </div>
+                </div>
+
+                <div class="article-item">
+                    <div class="article-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <div class="article-content">
+                        <div class="article-title">Backup and Restore Your Server</div>
+                        <div class="article-desc">Keep your server data safe with automated and manual backups</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>How do I get started with NoneCloud?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Getting started is easy! Simply choose a hosting plan that fits your needs, create an account, and follow our setup wizard. You'll have access to the Pterodactyl Panel where you can install games, manage files, and configure your server. Our getting started guide walks you through every step.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What games are supported on NoneCloud?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We support 50+ popular games including Minecraft (Java & Bedrock), Counter-Strike 2, Rust, ARK: Survival Evolved, Garry's Mod, Terraria, and many more. Our platform is constantly updated to support new games as they become popular in the gaming community.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Can I upgrade or downgrade my hosting plan?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! You can upgrade your plan at any time to get more resources. Downgrades are also possible, though please note that downgrading may require reducing your server's resource usage first. All plan changes are prorated, so you only pay the difference.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>How do backups work?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We provide automated daily backups for all servers, with the ability to create manual backups anytime through the Pterodactyl Panel. Backups are stored securely and can be restored with just a few clicks. Higher-tier plans include more frequent backups and longer retention periods.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What kind of support do you offer?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We offer 24/7 support through multiple channels: Discord community, ticket system, live chat during business hours, and email support. Our team consists of experienced gamers and server administrators who understand your needs and can help with technical issues, setup questions, and optimization advice.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Do you offer refunds?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, we offer a 7-day money-back guarantee for new customers who are not satisfied with our services. Please review our refund policy for complete details on eligibility and the refund process.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-support">
+            <h2>Still Need Help?</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Can't find what you're looking for? Our support team is here to help!</p>
+            <div class="support-buttons">
+                <a href="contact.html" class="support-btn">
+                    <i class="fas fa-ticket-alt"></i>
+                    Open Support Ticket
+                </a>
+                <a href="#" class="support-btn">
+                    <i class="fab fa-discord"></i>
+                    Join Discord
+                </a>
+                <a href="#" class="support-btn">
+                    <i class="fas fa-comments"></i>
+                    Live Chat
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 NoneCloud. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // FAQ Toggle functionality
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const answer = faqItem.querySelector('.faq-answer');
+            const isActive = faqItem.classList.contains('active');
+
+            // Close all other FAQs
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.faq-answer').classList.remove('active');
+            });
+
+            // Toggle current FAQ
+            if (!isActive) {
+                faqItem.classList.add('active');
+                answer.classList.add('active');
+            }
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const articles = document.querySelectorAll('.article-item');
+            const categories = document.querySelectorAll('.category-card');
+
+            // Filter articles
+            articles.forEach(article => {
+                const title = article.querySelector('.article-title').textContent.toLowerCase();
+                const desc = article.querySelector('.article-desc').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || desc.includes(searchTerm)) {
+                    article.style.display = 'flex';
+                } else {
+                    article.style.display = searchTerm ? 'none' : 'flex';
+                }
+            });
+
+            // Filter categories
+            categories.forEach(category => {
+                const title = category.querySelector('h3').textContent.toLowerCase();
+                const desc = category.querySelector('p').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || desc.includes(searchTerm)) {
+                    category.style.display = 'block';
+                } else {
+                    category.style.display = searchTerm ? 'none' : 'block';
+                }
+            });
+        });
+
+        // Category navigation
+        function showCategory(category) {
+            // This would typically navigate to a category-specific page
+            // For demo purposes, we'll show an alert
+            const categoryNames = {
+                'getting-started': 'Getting Started',
+                'minecraft': 'Minecraft Hosting',
+                'cs2': 'CS2 Server Setup',
+                'pterodactyl': 'Pterodactyl Panel',
+                'billing': 'Billing & Account',
+                'troubleshooting': 'Troubleshooting'
+            };
+            
+            alert(`Navigating to ${categoryNames[category]} articles...`);
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
