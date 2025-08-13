@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoneCloud - Premium Game Hosting Solutions</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #06b6d4;
+            --dark-bg: #0f0f23;
+            --darker-bg: #08081a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --gradient-1: linear-gradient(135deg, #6366f1, #8b5cf6);
+            --gradient-2: linear-gradient(135deg, #06b6d4, #3b82f6);
+            --gradient-3: linear-gradient(135deg, #f59e0b, #ef4444);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--dark-bg);
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
+            animation: bgAnimation 20s ease-in-out infinite;
+        }
+
+        @keyframes bgAnimation {
+            0%, 100% { transform: translateX(0) translateY(0) scale(1); }
+            33% { transform: translateX(-10px) translateY(-10px) scale(1.05); }
+            66% { transform: translateX(10px) translateY(10px) scale(0.95); }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 35, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(15, 15, 35, 0.95);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: var(--gradient-1);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 .gradient-text {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* 3D Floating Elements */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-cube {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-2);
+            border-radius: 10px;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.7;
+            transform-style: preserve-3d;
+        }
+
+        .floating-cube:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 8s;
+        }
+
+        .floating-cube:nth-child(2) {
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+            animation-duration: 10s;
+        }
+
+        .floating-cube:nth-child(3) {
+            top: 80%;
+            left: 20%;
+            animation-delay: 4s;
+            animation-duration: 12s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotateX(0) rotateY(0); }
+            25% { transform: translateY(-20px) rotateX(10deg) rotateY(10deg); }
+            50% { transform: translateY(-40px) rotateX(20deg) rotateY(20deg); }
+            75% { transform: translateY(-20px) rotateX(10deg) rotateY(10deg); }
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 15px;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Stats Section */
+        .stats {
+            background: var(--darker-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Pricing Section */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card.featured {
+            border: 2px solid var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-1);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .pricing-card.featured:hover {
+            transform: translateY(-10px) scale(1.05);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .features-list li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+        }
+
+        .features-list li i {
+            color: var(--accent-color);
+            margin-right: 0.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--darker-bg);
+            padding: 3rem 0 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            line-height: 1.6;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--text-primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-links a:hover {
+            background: var(--gradient-1);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .services-grid,
+            .features-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+
+            .pricing-card.featured:hover {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Scroll Animations */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-animate.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient-1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gradient-2);
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">NoneCloud</a>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="#pricing" class="cta-button">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="floating-elements">
+            <div class="floating-cube"></div>
+            <div class="floating-cube"></div>
+            <div class="floating-cube"></div>
+        </div>
+        <div class="hero-content">
+            <h1>Premium <span class="gradient-text">Game Hosting</span> Solutions</h1>
+            <p>Experience unparalleled performance with NoneCloud's cutting-edge infrastructure powered by Pterodactyl Panel. Host Minecraft, CS2, and more with zero lag and maximum uptime.</p>
+            <div class="hero-buttons">
+                <a href="#pricing" class="btn-primary">Start Hosting Now</a>
+                <a href="#features" class="btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section" id="services">
+        <div class="container">
+            <div class="section-header scroll-animate">
+                <h2>Game Hosting Services</h2>
+                <p>Discover our comprehensive range of game server hosting solutions designed for optimal performance and reliability.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card scroll-animate">
+                    <div class="service-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <h3>Minecraft Hosting</h3>
+                    <p>Host your Minecraft servers with optimized performance, automatic backups, and one-click mod installations. Perfect for survival, creative, and modded servers.</p>
+                </div>
+                <div class="service-card scroll-animate">
+                    <div class="service-icon">
+                        <i class="fas fa-crosshairs"></i>
+                    </div>
+                    <h3>CS2 Server Hosting</h3>
+                    <p>Ultra-low latency CS2 servers with DDoS protection and advanced anti-cheat integration. Ideal for competitive gaming and tournaments.</p>
+                </div>
+                <div class="service-card scroll-animate">
+                    <div class="service-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3>Multi-Game Support</h3>
+                    <p>Host a variety of games including Rust, ARK, Garry's Mod, and more. All managed through our intuitive Pterodactyl panel interface.</p>
+                </div>
+                <div class="service-card scroll-animate">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>DDoS Protection</h3>
+                    <p>Advanced security measures with enterprise-grade DDoS mitigation to keep your servers online and protected 24/7.</p>
+                </div>
+                <div class="service-card scroll-animate">
+                    <div class="service-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h3>Automatic Backups</h3>
+                    <p>Never lose your progress with automated daily backups and instant restore functionality built into every hosting plan.</p>
+                </div>
+                <div class="service-card scroll-animate">
+                    <div class="service-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>24/7 Support</h3>
+                    <p>Our dedicated support team is available around the clock via Discord and ticket system to assist with any issues or questions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <div class="container">
+            <div class="section-header scroll-animate">
+                <h2>Powered by Pterodactyl Panel</h2>
+                <p>Experience the industry-leading game server management panel trusted by thousands of users worldwide.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-item scroll-animate">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3>Real-time Monitoring</h3>
+                    <p>Monitor your server's performance, resource usage, and player activity in real-time with detailed analytics.</p>
+                </div>
+                <div class="feature-item scroll-animate">
+                    <div class="feature-icon">
+                        <i class="fas fa-mouse-pointer"></i>
+                    </div>
+                    <h3>One-Click Installs</h3>
+                    <p>Install games, mods, and plugins with a single click through our streamlined installation system.</p>
+                </div>
+                <div class="feature-item scroll-animate">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-code"></i>
+                    </div>
+                    <h3>File Manager</h3>
+                    <p>Edit configuration files, upload content, and manage your server files directly through the web interface.</p>
+                </div>
+                <div class="feature-item scroll-animate">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>User Management</h3>
+                    <p>Grant different permission levels to team members and manage access control with granular permissions.</p>
+                </div>
+            </div>
+
+            <div class="stats scroll-animate">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h3>99.9%</h3>
+                        <p>Uptime Guarantee</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3><5ms</h3>
+                        <p>Average Latency</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>24/7</h3>
+                        <p>Expert Support</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>1000+</h3>
+                        <p>Happy Customers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="section" id="pricing">
+        <div class="container">
+            <div class="section-header scroll-animate">
+                <h2>Choose Your Plan</h2>
+                <p>Flexible pricing options designed to scale with your gaming community's needs.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card scroll-animate">
+                    <h3>Starter</h3>
+                    <div class="price">$9<span>/month</span></div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> 2GB RAM</li>
+                        <li><i class="fas fa-check"></i> 25GB SSD Storage</li>
+                        <li><i class="fas fa-check"></i> Unlimited Bandwidth</li>
+                        <li><i class="fas fa-check"></i> DDoS Protection</li>
+                        <li><i class="fas fa-check"></i> Daily Backups</li>
+                        <li><i class="fas fa-check"></i> Pterodactyl Panel</li>
+                    </ul>
+                    <a href="#" class="btn-primary">Get Started</a>
+                </div>
+                <div class="pricing-card featured scroll-animate">
+                    <h3>Professional</h3>
+                    <div class="price">$19<span>/month</span></div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> 4GB RAM</li>
+                        <li><i class="fas fa-check"></i> 50GB SSD Storage</li>
+                        <li><i class="fas fa-check"></i> Unlimited Bandwidth</li>
+                        <li><i class="fas fa-check"></i> Advanced DDoS Protection</li>
+                        <li><i class="fas fa-check"></i> Hourly Backups</li>
+                        <li><i class="fas fa-check"></i> Priority Support</li>
+                        <li><i class="fas fa-check"></i> Custom Subdomain</li>
+                    </ul>
+                    <a href="#" class="btn-primary">Get Started</a>
+                </div>
+                <div class="pricing-card scroll-animate">
+                    <h3>Enterprise</h3>
+                    <div class="price">$39<span>/month</span></div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> 8GB RAM</li>
+                        <li><i class="fas fa-check"></i> 100GB SSD Storage</li>
+                        <li><i class="fas fa-check"></i> Unlimited Bandwidth</li>
+                        <li><i class="fas fa-check"></i> Enterprise DDoS Protection</li>
+                        <li><i class="fas fa-check"></i> Real-time Backups</li>
+                        <li><i class="fas fa-check"></i> 24/7 Phone Support</li>
+                        <li><i class="fas fa-check"></i> Dedicated IP</li>
+                        <li><i class="fas fa-check"></i> White-label Option</li>
+                    </ul>
+                    <a href="#" class="btn-primary">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>NoneCloud</h3>
+                    <p>Premium game hosting solutions powered by cutting-edge infrastructure and the trusted Pterodactyl Panel. Join thousands of satisfied customers worldwide.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-reddit"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <p><a href="#">Minecraft Hosting</a></p>
+                    <p><a href="#">CS2 Server Hosting</a></p>
+                    <p><a href="#">Rust Hosting</a></p>
+                    <p><a href="#">ARK Hosting</a></p>
+                    <p><a href="#">Custom Solutions</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <p><a href="#">Knowledge Base</a></p>
+                    <p><a href="#">Discord Community</a></p>
+                    <p><a href="#">Submit Ticket</a></p>
+                    <p><a href="#">Server Status</a></p>
+                    <p><a href="#">Contact Us</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <p><a href="#">About Us</a></p>
+                    <p><a href="#">Terms of Service</a></p>
+                    <p><a href="#">Privacy Policy</a></p>
+                    <p><a href="#">Refund Policy</a></p>
+                    <p><a href="#">Careers</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 NoneCloud. All rights reserved. Powered by cutting-edge technology and passion for gaming.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-animate').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Counter animation for stats
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                
+                if (element.textContent.includes('%')) {
+                    element.textContent = Math.floor(current) + '%';
+                } else if (element.textContent.includes('ms')) {
+                    element.textContent = '<' + Math.floor(current) + 'ms';
+                } else if (element.textContent.includes('/')) {
+                    element.textContent = '24/7';
+                } else {
+                    element.textContent = Math.floor(current) + '+';
+                }
+            }, 20);
+        }
+
+        // Trigger counter animation when stats section is visible
+        const statsObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statItems = entry.target.querySelectorAll('.stat-item h3');
+                    statItems[0] && animateCounter(statItems[0], 99.9);
+                    statItems[1] && animateCounter(statItems[1], 5);
+                    statItems[2] && animateCounter(statItems[2], 24);
+                    statItems[3] && animateCounter(statItems[3], 1000);
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const statsSection = document.querySelector('.stats');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+
+        // Parallax effect for floating elements
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelectorAll('.floating-cube');
+            const speed = 0.5;
+
+            parallax.forEach((element, index) => {
+                const yPos = -(scrolled * speed * (index + 1) * 0.3);
+                element.style.transform = `translate3d(0, ${yPos}px, 0) rotateX(${scrolled * 0.1}deg) rotateY(${scrolled * 0.1}deg)`;
+            });
+        });
+
+        // Add loading animation
+        window.addEventListener('load', function() {
+            document.body.classList.add('loaded');
+        });
+
+        // Mobile menu toggle (if needed)
+        function toggleMobileMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Add particle effect on mouse move
+        document.addEventListener('mousemove', function(e) {
+            const cursor = document.createElement('div');
+            cursor.className = 'cursor-particle';
+            cursor.style.cssText = `
+                position: fixed;
+                width: 4px;
+                height: 4px;
+                background: var(--gradient-1);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                left: ${e.clientX}px;
+                top: ${e.clientY}px;
+                animation: cursorParticle 1s ease-out forwards;
+            `;
+            
+            document.body.appendChild(cursor);
+            
+            setTimeout(() => {
+                cursor.remove();
+            }, 1000);
+        });
+
+        // Add cursor particle animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes cursorParticle {
+                0% {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                100% {
+                    opacity: 0;
+                    transform: scale(0.5) translate(${Math.random() * 40 - 20}px, ${Math.random() * 40 - 20}px);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
