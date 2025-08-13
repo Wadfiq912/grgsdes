@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="theme-color" content="#0d0f1a" />
+  <title>NoneCloud — Premium Game Hosting powered by Pterodactyl</title>
+  <meta name="description" content="NoneCloud provides premium, DDoS-protected, low-latency game hosting powered by the Pterodactyl Panel. Launch Minecraft, CS2, Rust and more in seconds." />
+  <meta property="og:title" content="NoneCloud — Premium Game Hosting" />
+  <meta property="og:description" content="Reliable, high-performance nodes. Seamless control with Pterodactyl. DDoS protection, one‑click installs, backups, and 24/7 support." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://nonecloud.example" />
+  <style>
+    /* ---------- CSS RESET ---------- */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; height: 100%; }
+    img, svg, video, canvas { display: block; max-width: 100%; }
+    button, input, textarea, select { font: inherit; color: inherit; }
+
+    /* ---------- THEME ---------- */
+    :root {
+      --bg: #0a0c14;
+      --bg-elev: #0f1324;
+      --text: #e6e8ee;
+      --muted: #a7afc2;
+      --primary: #7c3aed; /* violet */
+      --primary-2: #06b6d4; /* cyan */
+      --accent: #22d3ee; /* sky */
+      --success: #10b981; /* green */
+      --warning: #f59e0b; /* amber */
+      --danger: #ef4444;  /* red */
+      --card: rgba(16, 20, 40, 0.6);
+      --glass: rgba(16, 20, 40, 0.45);
+      --border: rgba(255, 255, 255, 0.08);
+      --shadow: 0 10px 30px rgba(0,0,0,0.45), inset 0 0 0 1px var(--border);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --ring: 0 0 0 8px rgba(124, 58, 237, 0.15);
+    }
+
+    body {
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(124, 58, 237, 0.25), transparent 60%),
+                  radial-gradient(1000px 500px at 80% -10%, rgba(6, 182, 212, 0.22), transparent 60%),
+                  linear-gradient(180deg, #070812 0%, #0a0c14 35%, #0a0c14 100%);
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1200px, 92vw);
+      margin-inline: auto;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      height: 48px;
+      padding: 0 18px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      color: var(--text);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      box-shadow: var(--shadow);
+      will-change: transform;
+    }
+    .btn:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.16); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      border: none;
+      box-shadow: 0 10px 30px rgba(124, 58, 237, 0.35), 0 10px 30px rgba(6, 182, 212, 0.25);
+    }
+
+    .pill {
+      display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px;
+      border-radius: 999px; border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-size: 12px; letter-spacing: 0.3px;
+    }
+
+    /* ---------- NAVBAR ---------- */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: saturate(140%) blur(10px);
+      background: linear-gradient(180deg, rgba(10,12,20,0.9), rgba(10,12,20,0.6));
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 0;
+    }
+    .logo { display:flex; align-items:center; gap:10px; font-weight: 800; letter-spacing: 0.4px; }
+    .logo-badge {
+      width: 34px; height: 34px; border-radius: 10px; display:grid; place-items:center;
+      background: radial-gradient(circle at 30% 30%, #9a6bff, #5b2ee6 60%, #1b1d3a 100%);
+      box-shadow: 0 10px 20px rgba(124,58,237,0.3), inset 0 0 0 1px rgba(255,255,255,0.15);
+    }
+    .logo-badge svg { filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); }
+
+    .nav-links { display:flex; gap: 18px; align-items:center; }
+    .nav-links a { color: var(--muted); font-weight: 600; font-size: 14px; }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta { display:flex; align-items:center; gap: 12px; }
+
+    .mobile-toggle { display:none; }
+
+    @media (max-width: 920px) {
+      .nav-links { display:none; }
+      .mobile-toggle { display:flex; }
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      position: relative;
+      padding: 90px 0 60px;
+      overflow: clip;
+      perspective: 1200px;
+    }
+
+    .hero-grid { display:grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; }
+    @media (max-width: 920px) { .hero-grid { grid-template-columns: 1fr; gap: 28px; } }
+
+    .headline {
+      font-size: clamp(34px, 6vw, 58px);
+      line-height: 1.08; font-weight: 900;
+      letter-spacing: 0.3px;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #fff, #8ab4ff 30%, #22d3ee 60%, #b28cff);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: 0 10px 50px rgba(34,211,238,0.12);
+    }
+    .subhead { color: var(--muted); font-size: clamp(15px, 2.2vw, 18px); margin-top: 16px; }
+
+    .hero-cta { display:flex; gap: 12px; margin-top: 26px; flex-wrap: wrap; }
+
+    .stats {
+      display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 28px;
+    }
+    .stat {
+      padding: 14px 14px; border-radius: 12px; border: 1px solid var(--border); background: rgba(255,255,255,0.03);
+      text-align: center; backdrop-filter: blur(6px);
+    }
+    .stat b { font-size: 18px; }
+    .stat span { display:block; color: var(--muted); font-size: 12px; margin-top: 4px; }
+    @media (max-width: 680px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+    .hero-visual {
+      position: relative; min-height: 380px;
+      transform-style: preserve-3d;
+    }
+
+    /* 3D cube */
+    .cube {
+      position: absolute; right: 10%; top: 0; width: 240px; height: 240px;
+      transform-style: preserve-3d; transform: rotateX(-18deg) rotateY(24deg);
+      animation: cube-rot 14s linear infinite;
+      filter: drop-shadow(0 30px 60px rgba(124,58,237,0.25));
+    }
+    @keyframes cube-rot {
+      0% { transform: rotateX(-18deg) rotateY(0deg); }
+      100% { transform: rotateX(-18deg) rotateY(360deg); }
+    }
+    .cube .face {
+      position: absolute; inset: 0; display:grid; place-items:center;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px; overflow:hidden; backdrop-filter: blur(4px);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+    }
+    .cube .face::before { content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(124,58,237,0.14), rgba(6,182,212,0.14)); }
+    .cube .face svg { opacity: 0.8; }
+    .cube .f1 { transform: translateZ(120px); background: rgba(10,12,20,0.55); }
+    .cube .f2 { transform: rotateY(90deg) translateZ(120px); background: rgba(10,12,20,0.55); }
+    .cube .f3 { transform: rotateY(180deg) translateZ(120px); background: rgba(10,12,20,0.55); }
+    .cube .f4 { transform: rotateY(-90deg) translateZ(120px); background: rgba(10,12,20,0.55); }
+    .cube .f5 { transform: rotateX(90deg) translateZ(120px); background: rgba(10,12,20,0.55); }
+    .cube .f6 { transform: rotateX(-90deg) translateZ(120px); background: rgba(10,12,20,0.55); }
+
+    /* hero floating cards */
+    .panel-mock {
+      position: absolute; left: 0; right: 0; margin: 0 auto; top: 40px;
+      width: min(660px, 86%); border-radius: var(--radius); border:1px solid var(--border);
+      background: var(--glass); box-shadow: var(--shadow);
+      transform: translateZ(60px) rotateX(4deg) rotateY(-8deg);
+      transform-style: preserve-3d;
+    }
+    .panel-header {
+      display:flex; align-items:center; justify-content: space-between;
+      padding: 12px 14px; border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0));
+    }
+    .dots { display:flex; gap:8px; }
+    .dot { width:10px; height:10px; border-radius:999px; }
+    .dot.r { background:#ff5f57; } .dot.y { background:#febc2e; } .dot.g { background:#28c840; }
+    .panel-body { display:grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 14px; }
+
+    .terminal {
+      border-radius: 12px; border:1px solid var(--border); padding: 14px; background: rgba(5,7,14,0.7);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px; color: #d1ffea; box-shadow: inset 0 0 20px rgba(0,0,0,0.25);
+      min-height: 160px; position: relative; overflow: hidden;
+    }
+    .term-caret { position:absolute; width: 10px; height: 1.1em; background: #d1ffea; animation: caret 1.2s steps(1) infinite; }
+    @keyframes caret { 50% { opacity: 0; } }
+
+    .metrics {
+      border-radius: 12px; border:1px solid var(--border); padding: 14px; background: rgba(255,255,255,0.04);
+      display:grid; gap: 10px; color: var(--muted);
+    }
+    .meter {
+      display:grid; gap: 8px;
+    }
+    .meter b { color: var(--text); font-size: 13px; }
+    .bar { height: 10px; border-radius: 999px; background: rgba(255,255,255,0.06); overflow: hidden; }
+    .bar .fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--primary-2)); border-radius: inherit; width: 0; }
+
+    .floating-badges { position:absolute; inset: 0; pointer-events: none; }
+    .floating-badge {
+      position: absolute; padding: 10px 14px; border-radius: 999px; border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05); color: var(--text); font-weight: 700; font-size: 12px; letter-spacing: 0.3px;
+      box-shadow: var(--shadow);
+      animation: float 6s ease-in-out infinite;
+    }
+    .floating-badge:nth-child(1){ left: -6%; top: 12%; animation-delay: 0.2s; }
+    .floating-badge:nth-child(2){ right: -8%; top: 24%; animation-delay: 1.1s; }
+    .floating-badge:nth-child(3){ left: 2%; bottom: 8%; animation-delay: 2s; }
+    @keyframes float { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-10px);} }
+
+    /* ---------- SECTIONS ---------- */
+    section { padding: 80px 0; position: relative; }
+    .section-head { display:flex; align-items:flex-end; justify-content: space-between; gap: 20px; margin-bottom: 28px; }
+    .section-title { font-size: clamp(22px, 4vw, 34px); font-weight: 900; }
+    .section-sub { color: var(--muted); max-width: 720px; }
+
+    .grid-3 { display:grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .grid-4 { display:grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    @media (max-width: 1020px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 760px) { .grid-3 { grid-template-columns: 1fr; } .grid-4 { grid-template-columns: 1fr; } }
+
+    .card {
+      position: relative; border-radius: var(--radius); border: 1px solid var(--border);
+      background: var(--card); box-shadow: var(--shadow); overflow: hidden;
+      padding: 18px; transition: transform 0.25s ease, border-color 0.25s ease;
+      transform-style: preserve-3d;
+    }
+    .card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.16); }
+    .card .icon {
+      width: 46px; height: 46px; border-radius: 12px; display:grid; place-items:center; margin-bottom: 12px;
+      background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(6,182,212,0.2));
+      border: 1px solid var(--border);
+    }
+    .card h3 { margin: 6px 0 8px; font-size: 18px; }
+    .card p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+    /* pricing */
+    .toggle {
+      display:flex; align-items:center; gap:10px; border:1px solid var(--border); border-radius: 999px; padding: 6px;
+      background: rgba(255,255,255,0.04);
+    }
+    .toggle button { border:none; background: transparent; color: var(--muted); font-weight: 700; padding: 8px 12px; border-radius: 999px; cursor:pointer; }
+    .toggle button.active { background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(6,182,212,0.3)); color: white; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); }
+
+    .plan { display:flex; flex-direction: column; gap: 14px; }
+    .price { font-size: 36px; font-weight: 900; letter-spacing: -0.5px; }
+    .price small { color: var(--muted); font-weight: 700; font-size: 12px; }
+    .features { display:grid; gap: 8px; color: var(--muted); font-size: 14px; }
+    .features li { display:flex; align-items:center; gap: 10px; }
+
+    /* logos row */
+    .logos { display:flex; flex-wrap: wrap; gap: 14px; opacity: 0.9; }
+    .logo-chip { display:flex; align-items:center; gap: 10px; border:1px solid var(--border); border-radius: 999px; padding: 8px 12px; background: rgba(255,255,255,0.04);}    
+
+    /* testimonials */
+    .quote { font-size: 15px; color: var(--muted); }
+    .avatar { width: 38px; height: 38px; border-radius: 999px; background: linear-gradient(135deg, #4ade80, #22d3ee); border: 2px solid rgba(255,255,255,0.2); }
+
+    /* faq */
+    .faq-item { border:1px solid var(--border); border-radius: 14px; background: rgba(255,255,255,0.04); overflow:hidden; }
+    .faq-q { display:flex; align-items:center; justify-content: space-between; gap: 14px; padding: 14px; cursor:pointer; }
+    .faq-a { padding: 0 14px 14px; color: var(--muted); display:none; }
+    .faq-item.open .faq-a { display:block; }
+
+    /* footer */
+    footer { border-top: 1px solid var(--border); background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)); padding: 30px 0; }
+
+    /* decorative */
+    .glow { position:absolute; filter: blur(90px); opacity: 0.25; pointer-events:none; }
+    .glow.violet { width: 420px; height: 420px; background: #7c3aed; left: -120px; top: 60px; }
+    .glow.cyan   { width: 360px; height: 360px; background: #06b6d4; right: -120px; top: 140px; }
+
+    .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent); margin: 6px 0 14px; }
+
+    /* reveal on scroll */
+    [data-reveal] { opacity: 0; transform: translateY(14px) scale(0.98); transition: opacity 0.6s ease, transform 0.6s ease; }
+    [data-reveal].in { opacity: 1; transform: translateY(0) scale(1); }
+
+    /* particles canvas layer */
+    #particles { position: absolute; inset: 0; z-index: 0; opacity: 0.65; }
+    .hero > * { position: relative; z-index: 1; }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "NoneCloud",
+    "url": "https://nonecloud.example",
+    "logo": "https://nonecloud.example/logo.png",
+    "sameAs": ["https://discord.gg/nonecloud", "https://twitter.com/nonecloud"],
+    "description": "Premium game hosting powered by the Pterodactyl Panel. Low latency, DDoS-protected nodes worldwide."
+  }
+  </script>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="logo" href="#home" aria-label="NoneCloud Home">
+        <span class="logo-badge" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img">
+            <path d="M5 15c0-3.5 2.5-6 6-6 1.2 0 2.3.3 3.2.9 1.3-2.2 3.7-3.9 6.3-3.9-1.4 1.2-2.2 3-2.2 5 0 3.9-3.1 7-7 7H9c-2.2 0-4-1.8-4-4z" fill="#fff"/>
+          </svg>
+        </span>
+        <span>NoneCloud</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#games">Games</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#panel">Panel</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="nav-cta">
+        <a class="btn" href="#login" aria-label="Login">Login</a>
+        <a class="btn btn-primary" href="#get-started" aria-label="Get Started">Get Started</a>
+        <button class="btn mobile-toggle" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="home" class="hero container">
+    <canvas id="particles" aria-hidden="true"></canvas>
+    <div class="glow violet"></div>
+    <div class="glow cyan"></div>
+
+    <div class="hero-grid">
+      <div>
+        <span class="pill" data-reveal>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 3l2.7 5.5L21 9l-4.5 4.2L17.4 21 12 17.8 6.6 21l.9-7.8L3 9l6.3-.5L12 3z" fill="#ffd166"/></svg>
+          Trusted Pterodactyl Hosting
+        </span>
+        <h1 class="headline" style="margin-top:14px" data-reveal>
+          Power your game servers with <span class="gradient-text">performance, security, and control</span>.
+        </h1>
+        <p class="subhead" data-reveal>
+          NoneCloud is a premium provider of game hosting nodes worldwide. Enjoy low latency, DDoS protection,
+          and a modern Pterodactyl Panel to manage Minecraft, CS2, Rust, and more — effortlessly.
+        </p>
+        <div class="hero-cta" data-reveal>
+          <a class="btn btn-primary" href="#pricing">Deploy now</a>
+          <a class="btn" href="#panel">See the Panel</a>
+        </div>
+        <div class="stats" data-reveal>
+          <div class="stat"><b>99.99%</b><span>Uptime SLA</span></div>
+          <div class="stat"><b>< 25 ms</b><span>Avg. Latency</span></div>
+          <div class="stat"><b>Global</b><span>Edge Network</span></div>
+          <div class="stat"><b>DDoS</b><span>Advanced Mitigation</span></div>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="panel-mock" data-tilt>
+          <div class="panel-header">
+            <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+            <span style="color:var(--muted); font-weight:700;">Pterodactyl Panel</span>
+            <span class="pill">Secure • Intuitive</span>
+          </div>
+          <div class="panel-body">
+            <div class="terminal">
+              <div class="divider"></div>
+              <pre id="term-text">$ nonecloud login\n✔ Authenticated via Discord\n$ nonecloud server create --game minecraft --region eu-west\nCreating node... ✓\nProvisioning resources... ✓\nInstalling PaperMC + Essentials... ✓\nServer online at mc.nonecloud.host:25565\n$ tail -f latest.log\n[Info] TPS 20.0 | Players 12/50 | Memory 1.6GB/4GB\n</pre>
+              <span class="term-caret" style="left: 12px; bottom: 14px;"></span>
+            </div>
+            <div class="metrics">
+              <div class="meter"><b>CPU</b><div class="bar"><div class="fill" style="--pct:68%"></div></div></div>
+              <div class="meter"><b>Memory</b><div class="bar"><div class="fill" style="--pct:42%"></div></div></div>
+              <div class="meter"><b>Network</b><div class="bar"><div class="fill" style="--pct:56%"></div></div></div>
+              <div class="meter"><b>Disk</b><div class="bar"><div class="fill" style="--pct:22%"></div></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="cube" aria-hidden="true">
+          <div class="face f1">📦</div>
+          <div class="face f2">🛡️</div>
+          <div class="face f3">⚡</div>
+          <div class="face f4">🌐</div>
+          <div class="face f5">🧰</div>
+          <div class="face f6">📈</div>
+        </div>
+        <div class="floating-badges">
+          <div class="floating-badge">NVMe Gen4</div>
+          <div class="floating-badge">AMD EPYC</div>
+          <div class="floating-badge">1 Tbps+ DDoS</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="pill" data-reveal>Why NoneCloud</div>
+          <h2 class="section-title" data-reveal>Built for creators, clans, and communities</h2>
+          <p class="section-sub" data-reveal>
+            We blend cutting-edge hardware, global networking, and the industry-leading Pterodactyl Panel to deliver
+            a frictionless hosting experience for any game server workload.
+          </p>
+        </div>
+        <div class="toggle" role="tablist" aria-label="Pricing toggle" data-reveal>
+          <button id="bill-m" class="active" aria-selected="true" aria-controls="pricing" role="tab">Monthly</button>
+          <button id="bill-y" aria-selected="false" aria-controls="pricing" role="tab">Yearly -2 months</button>
+        </div>
+      </div>
+      <div class="grid-3">
+        <article class="card" data-tilt data-reveal>
+          <div class="icon">🖥️</div>
+          <h3>Pterodactyl Panel</h3>
+          <p>Secure, open-source, and battle-tested. Manage servers, users, backups, and files in a modern UI.</p>
+        </article>
+        <article class="card" data-tilt data-reveal>
+          <div class="icon">⚡</div>
+          <h3>High Performance Nodes</h3>
+          <p>Latest-gen AMD EPYC/Intel Xeon CPUs, DDR5 RAM, and NVMe Gen4 storage for ultra-fast I/O and tick rates.</p>
+        </article>
+        <article class="card" data-tilt data-reveal>
+          <div class="icon">🛡️</div>
+          <h3>Advanced DDoS Protection</h3>
+          <p>Enterprise-grade filtering and firewalling on all plans. Keep your community safe and online.</p>
+        </article>
+        <article class="card" data-tilt data-reveal>
+          <div class="icon">🧩</div>
+          <h3>One‑click Installs</h3>
+          <p>Popular games, mods, and frameworks ready to go with a click. Eggs for hundreds more titles.</p>
+        </article>
+        <article class="card" data-tilt data-reveal>
+          <div class="icon">💾</div>
+          <h3>Automated Backups</h3>
+          <p>Schedule snapshots, keep versions, and roll back instantly. Your data is always safe.</p>
+        </article>
+        <article class="card" data-tilt data-reveal>
+          <div class="icon">💬</div>
+          <h3>24/7 Support</h3>
+          <p>We’re gamers too. Get help via Discord and tickets anytime you need it.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAMES -->
+  <section id="games">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="pill" data-reveal>Supported Titles</div>
+          <h2 class="section-title" data-reveal>From Minecraft to CS2 — and everything in between</h2>
+          <p class="section-sub" data-reveal>
+            Launch popular games in seconds. Bring your own egg or pick from a curated library of optimized templates.
+          </p>
+        </div>
+        <div class="logos" data-reveal>
+          <div class="logo-chip">🧪 Pterodactyl Eggs</div>
+          <div class="logo-chip">🧱 PaperMC</div>
+          <div class="logo-chip">🔫 CS2</div>
+          <div class="logo-chip">🛠️ Rust</div>
+          <div class="logo-chip">🚗 FiveM</div>
+        </div>
+      </div>
+
+      <div class="grid-4">
+        <article class="card" data-tilt data-reveal>
+          <div class="icon">🟩</div>
+          <h3>Minecraft</h3>
+          <p>Vanilla, Spigot/Paper, Modpacks (Forge/Fabric), Proxy (Bungee/Velocity), and more.</p>
+        </article>
+        <article class="card" data-tilt data-reveal>
+          <div class="icon">🔫</div>
+          <h3>Counter‑Strike 2</h3>
+          <p>Competitive-ready tick rates, workshop support, modding, and automated updates.</p>
+        </article>
+        <article class="card" data-tilt data-reveal>
+          <div class="icon">🛠️</div>
+          <h3>Rust</h3>
+          <p>OXIDE/uMod support, wipes, map seeds, and performance tuning presets.</p>
+        </article>
+        <article class="card" data-tilt data-reveal>
+          <div class="icon">🚗</div>
+          <h3>FiveM</h3>
+          <p>Streamed assets, ESX/vRP frameworks, and database add-ons ready to deploy.</p>
+        </article>
+        <article class="card" data-tilt data-reveal>
+          <div class="icon">🗡️</div>
+          <h3>Valheim</h3>
+          <p>Co‑op survival worlds with auto-backups and mod support via BepInEx.</p>
+        </article>
+        <article class="card" data-tilt data-reveal>
+          <div class="icon">🦖</div>
+          <h3>ARK: Survival</h3>
+          <p>Clustered servers, mods, and powerful hardware for large creature battles.</p>
+        </article>
+        <article class="card" data-tilt data-reveal>
+          <div class="icon">🧪</div>
+          <h3>Garry’s Mod</h3>
+          <p>DarkRP, TTT, and custom gamemodes with workshop and addon support.</p>
+        </article>
+        <article class="card" data-tilt data-reveal>
+          <div class="icon">➕</div>
+          <h3>Hundreds more</h3>
+          <p>Use our templates or import your own eggs. If it runs in Pterodactyl, it runs here.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="pill" data-reveal>Simple, transparent</div>
+          <h2 class="section-title" data-reveal>Flexible plans for every community size</h2>
+          <p class="section-sub" data-reveal>Switch billing anytime. Scale up as your player base grows.</p>
+        </div>
+      </div>
+
+      <div class="grid-4">
+        <article class="card plan" data-tilt data-reveal>
+          <h3>Starter</h3>
+          <div class="price" data-price data-monthly="$4.99" data-yearly="$3.99">$4.99 <small>/ mo</small></div>
+          <ul class="features">
+            <li>✅ 1 vCPU</li>
+            <li>✅ 4 GB DDR5 RAM</li>
+            <li>✅ 25 GB NVMe</li>
+            <li>✅ DDoS Protected</li>
+            <li>✅ 1 Backup Slot</li>
+          </ul>
+          <a class="btn btn-primary" href="#get-started">Deploy now</a>
+        </article>
+
+        <article class="card plan" data-tilt data-reveal>
+          <h3>Gamer</h3>
+          <div class="price" data-price data-monthly="$9.99" data-yearly="$7.99">$9.99 <small>/ mo</small></div>
+          <ul class="features">
+            <li>✅ 2 vCPU</li>
+            <li>✅ 8 GB DDR5 RAM</li>
+            <li>✅ 50 GB NVMe</li>
+            <li>✅ DDoS Protected</li>
+            <li>✅ 3 Backup Slots</li>
+          </ul>
+          <a class="btn btn-primary" href="#get-started">Deploy now</a>
+        </article>
+
+        <article class="card plan" data-tilt data-reveal>
+          <h3>Pro</h3>
+          <div class="price" data-price data-monthly="$19.99" data-yearly="$15.99">$19.99 <small>/ mo</small></div>
+          <ul class="features">
+            <li>✅ 4 vCPU</li>
+            <li>✅ 16 GB DDR5 RAM</li>
+            <li>✅ 100 GB NVMe</li>
+            <li>✅ Priority Support</li>
+            <li>✅ 7 Backup Slots</li>
+          </ul>
+          <a class="btn btn-primary" href="#get-started">Deploy now</a>
+        </article>
+
+        <article class="card plan" data-tilt data-reveal>
+          <h3>Enterprise</h3>
+          <div class="price" data-price data-monthly="Custom" data-yearly="Custom">Custom <small>/ mo</small></div>
+          <ul class="features">
+            <li>✅ Dedicated vCPU</li>
+            <li>✅ 32+ GB RAM</li>
+            <li>✅ 500+ GB NVMe</li>
+            <li>✅ Private Networking</li>
+            <li>✅ Dedicated Support</li>
+          </ul>
+          <a class="btn" href="#contact">Contact sales</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL -->
+  <section id="panel">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="pill" data-reveal>Pterodactyl</div>
+          <h2 class="section-title" data-reveal>Modern control panel you’ll love using</h2>
+          <p class="section-sub" data-reveal>
+            Create, customize, and control your servers without needing to be a sysadmin. Real-time stats, terminals,
+            file managers, SFTP, and permissioned access for your team.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <article class="card" data-tilt data-reveal>
+          <div class="icon">📈</div>
+          <h3>Live Resource Graphs</h3>
+          <p>Monitor CPU, RAM, disk, and network in real time. Spot issues before players do.</p>
+        </article>
+        <article class="card" data-tilt data-reveal>
+          <div class="icon">🔐</div>
+          <h3>Secure Access</h3>
+          <p>2FA, API keys, audit logs, and role-based access ensure safety for your assets and communities.</p>
+        </article>
+        <article class="card" data-tilt data-reveal>
+          <div class="icon">⚙️</div>
+          <h3>Automations</h3>
+          <p>Schedule tasks, restarts, and backups. Spend time playing, not babysitting servers.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="pill" data-reveal>Loved by communities</div>
+          <h2 class="section-title" data-reveal>What our users say</h2>
+        </div>
+      </div>
+      <div class="grid-3">
+        <article class="card" data-reveal>
+          <p class="quote">“We migrated our Minecraft network to NoneCloud and our tick rates instantly stabilized. The Pterodactyl Panel is a dream.”</p>
+          <div style="display:flex; align-items:center; gap:10px; margin-top:12px;">
+            <div class="avatar"></div>
+            <div><b>@BlockSmith</b><div style="color:var(--muted); font-size:12px;">Minecraft Network Owner</div></div>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <p class="quote">“CS2 servers feel crisp even with full lobbies. Support helped us move configs in under an hour. Highly recommend.”</p>
+          <div style="display:flex; align-items:center; gap:10px; margin-top:12px;">
+            <div class="avatar" style="background:linear-gradient(135deg,#f43f5e,#f59e0b)"></div>
+            <div><b>@AimLabs</b><div style="color:var(--muted); font-size:12px;">Esports Community</div></div>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <p class="quote">“Backups saved our modpack world. Turned a potential disaster into a 5‑minute rollback.”</p>
+          <div style="display:flex; align-items:center; gap:10px; margin-top:12px;">
+            <div class="avatar" style="background:linear-gradient(135deg,#22d3ee,#7c3aed)"></div>
+            <div><b>@PixelForge</b><div style="color:var(--muted); font-size:12px;">Modded Server Admin</div></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="pill" data-reveal>Answers</div>
+          <h2 class="section-title" data-reveal>Frequently asked questions</h2>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <article class="faq-item" data-reveal>
+          <div class="faq-q"><b>What is Pterodactyl?</b><span>+</span></div>
+          <div class="faq-a">Pterodactyl is a modern, open-source game server management panel trusted worldwide. It provides a secure and intuitive dashboard for managing servers, users, and resources.</div>
+        </article>
+        <article class="faq-item" data-reveal>
+          <div class="faq-q"><b>Which regions do you support?</b><span>+</span></div>
+          <div class="faq-a">We operate across multiple regions globally. Choose the closest node to your players for the lowest latency.</div>
+        </article>
+        <article class="faq-item" data-reveal>
+          <div class="faq-q"><b>Do you offer DDoS protection?</b><span>+</span></div>
+          <div class="faq-a">Yes. All plans include advanced DDoS mitigation and firewall configurations to keep your servers safe.</div>
+        </article>
+        <article class="faq-item" data-reveal>
+          <div class="faq-q"><b>Can I migrate my server?</b><span>+</span></div>
+          <div class="faq-a">Absolutely. Our support team can help you migrate from other providers or self-hosted setups with minimal downtime.</div>
+        </article>
+        <article class="faq-item" data-reveal>
+          <div class="faq-q"><b>What about backups?</b><span>+</span></div>
+          <div class="faq-a">Automated backups are included on all plans. Configure schedules and retention right from the panel.</div>
+        </article>
+        <article class="faq-item" data-reveal>
+          <div class="faq-q"><b>How do I get support?</b><span>+</span></div>
+          <div class="faq-a">We’re available 24/7 via Discord and tickets. Priority support is included on Pro and Enterprise plans.</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="get-started">
+    <div class="container" style="text-align:center;">
+      <div class="pill" data-reveal>Ready to launch?</div>
+      <h2 class="section-title" data-reveal>Join NoneCloud today</h2>
+      <p class="section-sub" style="margin-inline:auto;" data-reveal>
+        Deploy your first server in minutes with Pterodactyl. Start small, scale fast, and delight your players.
+      </p>
+      <div class="hero-cta" style="justify-content:center;" data-reveal>
+        <a class="btn btn-primary" href="#pricing">View Pricing</a>
+        <a class="btn" href="#contact">Contact Sales</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container" style="display:flex; align-items:center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+      <div style="display:flex; align-items:center; gap: 10px;">
+        <span class="logo-badge" aria-hidden="true" style="width:28px;height:28px; border-radius:8px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 15c0-3.5 2.5-6 6-6 1.2 0 2.3.3 3.2.9 1.3-2.2 3.7-3.9 6.3-3.9-1.4 1.2-2.2 3-2.2 5 0 3.9-3.1 7-7 7H9c-2.2 0-4-1.8-4-4z" fill="#fff"/></svg></span>
+        <b>NoneCloud</b>
+        <span style="color:var(--muted)">© <span id="year"></span></span>
+      </div>
+      <div style="display:flex; gap: 14px; color: var(--muted);">
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#panel">Panel</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Helpers
+    const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+
+    // Intersection reveal
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.15 });
+    $$('[data-reveal]').forEach(el => io.observe(el));
+
+    // Animated meters
+    function animateMeters() {
+      $$('.bar .fill').forEach((el, i) => {
+        const pct = el.style.getPropertyValue('--pct') || (20 + (i*13)) + '%';
+        requestAnimationFrame(() => { el.style.width = '0'; setTimeout(() => el.style.width = pct, 80 + i*140); });
+      });
+    }
+    animateMeters();
+
+    // Tilt effect
+    function addTilt(el) {
+      const strength = 12; const damp = 0.12; let px = 0, py = 0, vx = 0, vy = 0;
+      function onMove(e){
+        const r = el.getBoundingClientRect(); const cx = r.left + r.width/2; const cy = r.top + r.height/2; const x = (e.clientX - cx) / (r.width/2); const y = (e.clientY - cy) / (r.height/2);
+        px = x * strength; py = y * -strength;
+      }
+      function tick(){ vx += (px - vx) * damp; vy += (py - vy) * damp; el.style.transform = `rotateX(${vy}deg) rotateY(${vx}deg) translateZ(0)`; requestAnimationFrame(tick); }
+      el.addEventListener('mousemove', onMove);
+      el.addEventListener('mouseleave', () => { px = 0; py = 0; });
+      tick();
+      el.style.willChange = 'transform';
+    }
+    $$('[data-tilt]').forEach(addTilt);
+
+    // Pricing toggle
+    const btnM = document.getElementById('bill-m');
+    const btnY = document.getElementById('bill-y');
+    function setBilling(yearly){
+      btnM.classList.toggle('active', !yearly); btnY.classList.toggle('active', yearly);
+      $$('[data-price]').forEach(el => {
+        const m = el.getAttribute('data-monthly'); const y = el.getAttribute('data-yearly');
+        el.innerHTML = (yearly ? y : m) + ' <small>/ ' + (yearly? 'mo (yr)' : 'mo') + '</small>';
+      });
+    }
+    btnM?.addEventListener('click', () => setBilling(false));
+    btnY?.addEventListener('click', () => setBilling(true));
+
+    // FAQ toggles
+    $$('.faq-item').forEach(item => item.querySelector('.faq-q').addEventListener('click', () => item.classList.toggle('open')));
+
+    // Year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Particles background
+    (function particles(){
+      const c = document.getElementById('particles'); if(!c) return; const ctx = c.getContext('2d'); let w=0,h=0; let dpr = Math.min(2, window.devicePixelRatio || 1);
+      const count = 90; const nodes = [];
+      function resize(){ w = c.clientWidth; h = c.clientHeight; c.width = w*dpr; c.height = h*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); }
+      function rnd(a,b){ return Math.random()*(b-a)+a; }
+      function init(){ nodes.length = 0; for(let i=0;i<count;i++){ nodes.push({ x:rnd(0,w), y:rnd(0,h), vx:rnd(-0.4,0.4), vy:rnd(-0.4,0.4), r:rnd(1.2,2.4)}); } }
+      function step(){ ctx.clearRect(0,0,w,h); for(const p of nodes){ p.x+=p.vx; p.y+=p.vy; if(p.x<0||p.x>w) p.vx*=-1; if(p.y<0||p.y>h) p.vy*=-1; }
+        for(const p of nodes){ ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle = 'rgba(146, 190, 255, 0.8)'; ctx.fill(); }
+        for(let i=0;i<nodes.length;i++){ for(let j=i+1;j<nodes.length;j++){ const a=nodes[i], b=nodes[j]; const dx=a.x-b.x, dy=a.y-b.y; const dist = Math.hypot(dx,dy); if(dist<120){ const o = (1 - dist/120)*0.45; ctx.strokeStyle = `rgba(124,58,237,${o})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); } } }
+        requestAnimationFrame(step); }
+      resize(); init(); step(); window.addEventListener('resize', () => { resize(); init(); });
+    })();
+
+    // Animate terminal caret
+    (function term(){
+      const pre = document.getElementById('term-text'); if(!pre) return; const caret = document.querySelector('.term-caret');
+      function updateCaret(){ const r = pre.getBoundingClientRect(); const lines = pre.textContent.split('\n'); const last = lines[lines.length-1] || ''; const measure = document.createElement('span');
+        measure.style.visibility='hidden'; measure.style.whiteSpace='pre'; measure.textContent = last.replace(/ /g, '\u00a0'); pre.parentNode.appendChild(measure);
+        const mr = measure.getBoundingClientRect(); caret.style.left = (mr.width + 12) + 'px'; measure.remove(); }
+      updateCaret();
+      const add = ['[Info] Auto-saving world...', '[Info] Backup completed', '[Warning] High TPS usage detected', '[Info] Restart scheduled 3:00 UTC'];
+      let i=0; setInterval(() => { pre.textContent += "\n" + add[i++ % add.length]; updateCaret(); }, 2800);
+    })();
+  </script>
+</body>
+</html>
